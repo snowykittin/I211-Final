@@ -17,6 +17,12 @@ class ComposerStaticInit1ead6ce07a3836fe5762e9902a70ffd1
         'HomeController' => __DIR__ . '/../..' . '/controllers/home_controller.class.php',
         'HomeIndex' => __DIR__ . '/../..' . '/views/home/home_index.class.php',
         'IndexView' => __DIR__ . '/../..' . '/views/index_view.class.php',
+        'LoginController' => __DIR__ . '/../..' . '/controllers/login_controller.class.php',
+        'LoginModel' => __DIR__ . '/../..' . '/models/login_model.class.php',
+        'LoginView' => __DIR__ . '/../..' . '/views/login/login_view.class.php',
+        'RegisterController' => __DIR__ . '/../..' . '/controllers/register_controller.class.php',
+        'RegisterModel' => __DIR__ . '/../..' . '/models/register_model.class.php',
+        'RegisterView' => __DIR__ . '/../..' . '/views/register/register_view.class.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

@@ -16,4 +16,10 @@ return array(
     'HomeController' => $baseDir . '/controllers/home_controller.class.php',
     'HomeIndex' => $baseDir . '/views/home/home_index.class.php',
     'IndexView' => $baseDir . '/views/index_view.class.php',
+    'LoginController' => $baseDir . '/controllers/login_controller.class.php',
+    'LoginModel' => $baseDir . '/models/login_model.class.php',
+    'LoginView' => $baseDir . '/views/login/login_view.class.php',
+    'RegisterController' => $baseDir . '/controllers/register_controller.class.php',
+    'RegisterModel' => $baseDir . '/models/register_model.class.php',
+    'RegisterView' => $baseDir . '/views/register/register_view.class.php',
 );
