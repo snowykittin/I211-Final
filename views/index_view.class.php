@@ -24,9 +24,10 @@ class IndexView
                 </div>
                 <nav>
 <!--                    ADD NAVIGATION -->
-                    <a href="<?= BASE_URL ?>/index.php">Why Us?</a> |
-                    <a href="<?= BASE_URL ?>/index.php">Contact</a> |
-                    <a href="<?= BASE_URL ?>/index.php">Log In</a>
+                    <a href="<?= BASE_URL ?>/index.php">HOME</a>
+                    <a href="<?= BASE_URL ?>/index.php">ABOUT</a>
+                    <a href="<?= BASE_URL ?>/index.php">LOG IN</a>
+                    <a href="<?= BASE_URL ?>/register.php">REGISTER</a>
                 </nav>
             </div>
             <div class="content">
