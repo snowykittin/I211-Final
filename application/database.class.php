@@ -35,4 +35,13 @@ class Database
         }
     }
 
+    //singleton pattern to create a single instance of the database connection object
+    static public function getInstance() {
+        if (self::$_instance == NULL) {
+            self::$_instance = new self();
+        }
+
+        return self::$_instance;
+    }
+
 }

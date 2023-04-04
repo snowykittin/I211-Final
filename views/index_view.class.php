@@ -27,7 +27,7 @@ class IndexView
                     <a href="<?= BASE_URL ?>/index.php">HOME</a>
                     <a href="<?= BASE_URL ?>/about">ABOUT</a>
                     <a href="<?= BASE_URL ?>/login">LOG IN</a>
-                    <a href="<?= BASE_URL ?>/register">REGISTER</a>
+                    <a href="<?= BASE_URL ?>/views/register/register_view.php">REGISTER</a>
                 </nav>
             </div>
             <div class="content">
