@@ -1,4 +1,8 @@
 <?php
+echo "This is the register view.";
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 class RegisterView
 {
     static public function show($form_data)
@@ -7,7 +11,7 @@ class RegisterView
         IndexView::displayHeader($page_title);
         ?>
         <h2>Register</h2>
-        <form method="post" action="<?= BASE_URL ?>/controllers/register.php">
+        <form method="post" action="<?= BASE_URL ?>/controllers/register_controller.class.php">
             <label for="first_name">First Name:</label>
             <input type="text" name="first_name" id="first_name" value="<?= $form_data['first_name'] ?? '' ?>" required><br><br>
 

@@ -1,6 +1,6 @@
 <?php
 
-class RegisterView extends IndexView
+class RegisterView
 {
     public function output() {
         include 'templates/header.php';

@@ -13,7 +13,7 @@ $controller = new RegisterController($model);
 
 $controller->registerUser();
 
-RegisterView::displayFooter();
+RegisterView::show(array());
 
 ?>
 
