@@ -34,7 +34,16 @@ class Database
             exit();
         }
     }
+    //static method to ensure there is just one Database instance
+    static public function getDatabase() {
+        if (self::$_instance == NULL)
+            self::$_instance = new Database();
+        return self::$_instance;
+    }
 
+    public function getConnection() {
+        return $this->objDBConnection;
+    }
     //singleton pattern to create a single instance of the database connection object
     static public function getInstance() {
         if (self::$_instance == NULL) {

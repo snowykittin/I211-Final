@@ -1,14 +1,14 @@
 <?php
 echo "This is the register view.";
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+//error_reporting(E_ALL);
+//ini_set('display_errors', 1);
 
-class RegisterView
+class RegisterView extends IndexView
 {
-    static public function show($form_data)
+    static public function display($form_data)
     {
         $page_title = "InfiniBank - Register";
-        IndexView::displayHeader($page_title);
+        parent::displayHeader($page_title);
         ?>
         <h2>Register</h2>
         <form method="post" action="<?= BASE_URL ?>/controllers/register_controller.class.php">
@@ -30,6 +30,6 @@ class RegisterView
             <input type="submit" name="register" value="Register">
         </form>
         <?php
-        IndexView::displayFooter();
+        parent::displayFooter();
     }
 }

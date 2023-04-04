@@ -5,9 +5,9 @@ class RegisterController
 {
     private $model;
 
-    public function __construct(RegisterModel $model)
+    public function __construct()
     {
-        $this->model = $model;
+        $this->model = RegisterModel::getRegisterModel();
     }
 
     public function registerUser()
