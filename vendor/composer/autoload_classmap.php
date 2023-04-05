@@ -8,7 +8,10 @@ $baseDir = dirname($vendorDir);
 return array(
     'AboutController' => $baseDir . '/controllers/about_controller.class.php',
     'AboutView' => $baseDir . '/views/about/about_view.class.php',
-    'AccountModel' => $baseDir . '/models/account_model.class.php',
+    'Account' => $baseDir . '/models/account/account.class.php',
+    'AccountController' => $baseDir . '/controllers/account_controller.class.php',
+    'AccountIndex' => $baseDir . '/views/account/index/account_index.class.php',
+    'AccountModel' => $baseDir . '/models/account/account_model.class.php',
     'ComposerAutoloaderInit1ead6ce07a3836fe5762e9902a70ffd1' => $vendorDir . '/composer/autoload_real.php',
     'Composer\\Autoload\\ClassLoader' => $vendorDir . '/composer/ClassLoader.php',
     'Composer\\Autoload\\ComposerStaticInit1ead6ce07a3836fe5762e9902a70ffd1' => $vendorDir . '/composer/autoload_static.php',

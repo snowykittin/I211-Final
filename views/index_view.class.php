@@ -17,6 +17,7 @@ class IndexView
             <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap" rel="stylesheet">
         </head>
         <body>
+        <div class="full-width">
             <div class="header">
                 <div class="title-bar">
                     <!-- LOGO AND INFO HERE -->
@@ -30,6 +31,7 @@ class IndexView
                     <a href="<?= BASE_URL ?>/views/register/register_view.php">REGISTER</a>
                 </nav>
             </div>
+        </div>
             <div class="content">
 
         <?php
@@ -41,7 +43,7 @@ class IndexView
         ?>
         </div>
 
-        <footer>
+        <footer class="full-width">
             &copy; 2023 Joseph Floreancig & Summer Sexton
         </footer>
         </body>

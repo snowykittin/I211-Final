@@ -9,7 +9,10 @@ class ComposerStaticInit1ead6ce07a3836fe5762e9902a70ffd1
     public static $classMap = array (
         'AboutController' => __DIR__ . '/../..' . '/controllers/about_controller.class.php',
         'AboutView' => __DIR__ . '/../..' . '/views/about/about_view.class.php',
-        'AccountModel' => __DIR__ . '/../..' . '/models/account_model.class.php',
+        'Account' => __DIR__ . '/../..' . '/models/account/account.class.php',
+        'AccountController' => __DIR__ . '/../..' . '/controllers/account_controller.class.php',
+        'AccountIndex' => __DIR__ . '/../..' . '/views/account/index/account_index.class.php',
+        'AccountModel' => __DIR__ . '/../..' . '/models/account/account_model.class.php',
         'ComposerAutoloaderInit1ead6ce07a3836fe5762e9902a70ffd1' => __DIR__ . '/..' . '/composer/autoload_real.php',
         'Composer\\Autoload\\ClassLoader' => __DIR__ . '/..' . '/composer/ClassLoader.php',
         'Composer\\Autoload\\ComposerStaticInit1ead6ce07a3836fe5762e9902a70ffd1' => __DIR__ . '/..' . '/composer/autoload_static.php',

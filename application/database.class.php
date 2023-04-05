@@ -16,7 +16,11 @@ class Database
         'host' => 'localhost',
         'login' => 'phpuser',
         'password' => 'phpuser',
-        'database' => 'infinibank_db'
+        'database' => 'infinibank_db',
+        'tblAccounts' => 'account',
+        'tblMembers' => 'member',
+        'tblTransactions' => 'transactions',
+        'tblCurrency' => 'currency'
     );
     //define the database connection object
     private $objDBConnection = NULL;
@@ -44,13 +48,22 @@ class Database
     public function getConnection() {
         return $this->objDBConnection;
     }
-    //singleton pattern to create a single instance of the database connection object
-    static public function getInstance() {
-        if (self::$_instance == NULL) {
-            self::$_instance = new self();
-        }
 
-        return self::$_instance;
+    //get table that stores accounts
+    public function getAccountsTable() {
+        return $this->param['tblAccounts'];
+    }
+    //get table that stores members
+    public function getMembersTable() {
+        return $this->param['tblMembers'];
+    }
+    //get table that stores transactions
+    public function getTransactionsTable() {
+        return $this->param['tblTransactions'];
+    }
+    //get currency types
+    public function getCurrencyTable(){
+        return $this->param['tblCurrency'];
     }
 
 }

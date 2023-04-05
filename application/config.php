@@ -7,4 +7,4 @@ error_reporting(E_ALL);
 date_default_timezone_set('America/New_York');
 
 //base url of the application
-const BASE_URL = "http://localhost/I211-Final";
+const BASE_URL = "http://localhost:8080/I211-Final";
