@@ -10,6 +10,7 @@ return array(
     'AboutView' => $baseDir . '/views/about/about_view.class.php',
     'Account' => $baseDir . '/models/account/account.class.php',
     'AccountController' => $baseDir . '/controllers/account_controller.class.php',
+    'AccountDetail' => $baseDir . '/views/account/detail/account_detail.class.php',
     'AccountIndex' => $baseDir . '/views/account/index/account_index.class.php',
     'AccountModel' => $baseDir . '/models/account/account_model.class.php',
     'ComposerAutoloaderInit1ead6ce07a3836fe5762e9902a70ffd1' => $vendorDir . '/composer/autoload_real.php',

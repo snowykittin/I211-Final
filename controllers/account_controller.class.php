@@ -20,8 +20,17 @@ class AccountController
     }
 
 //    //show a specific account's details
-//    public function detail($id){
-//
-//    }
+    public function details($id){
+        //retrieve specific account
+        $account = $this->account_model->view_account($id);
+
+        if(!$account){
+            //display error
+            return "We're sorry, your account cannot be found.";
+        }
+
+        $view = new AccountDetail();
+        $view->display($account);
+    }
 
 }

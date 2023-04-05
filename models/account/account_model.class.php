@@ -58,4 +58,24 @@ class AccountModel
 
         return $accounts;
     }
+
+    public function view_account($id){
+        $sql = "SELECT a.account_id, t.type_name, c.currency_symbol, a.value FROM account AS a LEFT JOIN acct_types AS t ON a.account_type = t.type_id LEFT JOIN currency AS c ON a.currency_type = c.currency_id WHERE a.account_id = '$id' ";
+
+        $query = $this->dbConnection->query($sql);
+
+        if($query && $query->num_rows > 0){
+            $obj = $query->fetch_object();
+
+            //create an account object
+            $account = new Account(stripslashes($obj->type_name),stripslashes($obj->currency_symbol),stripslashes($obj->value));
+
+            //set the id
+            $account->setId($obj->account_id);
+
+            return $account;
+        }
+        return false;
+
+    }
 }

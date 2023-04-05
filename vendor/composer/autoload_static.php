@@ -11,6 +11,7 @@ class ComposerStaticInit1ead6ce07a3836fe5762e9902a70ffd1
         'AboutView' => __DIR__ . '/../..' . '/views/about/about_view.class.php',
         'Account' => __DIR__ . '/../..' . '/models/account/account.class.php',
         'AccountController' => __DIR__ . '/../..' . '/controllers/account_controller.class.php',
+        'AccountDetail' => __DIR__ . '/../..' . '/views/account/detail/account_detail.class.php',
         'AccountIndex' => __DIR__ . '/../..' . '/views/account/index/account_index.class.php',
         'AccountModel' => __DIR__ . '/../..' . '/models/account/account_model.class.php',
         'ComposerAutoloaderInit1ead6ce07a3836fe5762e9902a70ffd1' => __DIR__ . '/..' . '/composer/autoload_real.php',

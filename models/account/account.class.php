@@ -41,7 +41,7 @@ class Account{
     }
 
 
-    public function getCurrencyType()
+    public function getCurrencySymbol()
     {
         return $this->currency_type;
     }

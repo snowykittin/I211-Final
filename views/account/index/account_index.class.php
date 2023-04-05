@@ -13,8 +13,7 @@ class AccountIndex extends IndexView
             <table>
                 <tr>
                     <th>Account Type</th>
-                    <th>Balance</th>
-                    <th>Transactions</th>
+                    <th colspan="2">Balance</th>
                 </tr>
             <?php
                 if($accounts === 0){
@@ -24,12 +23,12 @@ class AccountIndex extends IndexView
                     foreach($accounts as $i => $account){
                         $id = $account->getId();
                         $account_type = $account->getAccountType();
-                        $currency_type = $account->getCurrencyType();
+                        $currency_symbol = $account->getCurrencySymbol();
                         $balance = $account->getValue();
                         echo "<tr>";
                         echo "<td>", $account_type, "</td>";
-                        echo "<td>", $currency_type . $balance, "</td>";
-                        echo "<td>View All</td>";
+                        echo "<td>", $currency_symbol . $balance, "</td>";
+                        echo "<td style='text-align: right;'><a href='account/details/$id'>View Details</a></td>";
 
                         echo "</tr>";
                     }

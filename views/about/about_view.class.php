@@ -4,7 +4,7 @@ class AboutView extends IndexView
 {
     public function display(){
         //display page header
-        $page_title = "InfiniBank - About";
+        $page_title = "Infinibank - About";
         parent::displayHeader($page_title);
         ?>
             <div class="about-banner">
