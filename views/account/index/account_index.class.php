@@ -12,7 +12,6 @@ class AccountIndex extends IndexView
         <div class="accounts-container">
             <table>
                 <tr>
-                    <th>Account No.</th>
                     <th>Account Type</th>
                     <th>Balance</th>
                     <th>Transactions</th>
@@ -28,7 +27,6 @@ class AccountIndex extends IndexView
                         $currency_type = $account->getCurrencyType();
                         $balance = $account->getValue();
                         echo "<tr>";
-                        echo "<td>", $id, "</td>";
                         echo "<td>", $account_type, "</td>";
                         echo "<td>", $currency_type . $balance, "</td>";
                         echo "<td>View All</td>";
