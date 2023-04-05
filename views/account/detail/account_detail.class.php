@@ -19,6 +19,23 @@ class AccountDetail extends IndexView
 
         <div class="account-details">
             TODO: Add details for the account.
+            <div class="tab-table">
+                <div class="tab-navigation">
+                    <button class="tab-nav-item" onclick="openTab('Transactions')">Transactions</button>
+                    <button class="tab-nav-item" onclick="openTab('Details')">Details</button>
+                </div>
+
+                <div id="Transactions" class="tab-container tab">
+                    <h2>Transactions</h2>
+                    <p>See all of your transactions below.</p>
+                </div>
+
+                <div id="Details" class="tab-container tab" style="display:none">
+                    <h2>Details</h2>
+                    <p>These are the details of your account.</p>
+                </div>
+
+            </div>
         </div>
 
     <?php

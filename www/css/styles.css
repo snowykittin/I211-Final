@@ -226,3 +226,30 @@ footer{
     color: #FBFBF2;
     cursor: pointer;
 }
+/* Account details styling */
+.account-details{
+    width: 80%;
+    margin: 0 auto;
+}
+
+.account-details .tab-table{
+    border: 1px solid #ddd;
+    min-height: 600px;
+    margin-bottom: 100px;
+}
+.account-details .tab-table .tab-navigation{
+    width: 100%;
+    height: 50px;
+    background-color: #368a65;
+    display: flex;
+    align-items: center;
+}
+.tab-navigation button{
+    height: 100%;
+    border: none;
+    border-right: 1px solid #164d35;
+    background: none;
+    padding: 0px 20px;
+    font-size: 18px;
+    color: #FBFBF2;
+}
