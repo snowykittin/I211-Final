@@ -9,6 +9,8 @@ html, body {
 }
 h1, h2, h3, h4, h5, h6, p {
     margin-bottom: 16px;
+}h1, h2, h3, h4, h5, h6 {
+     font-family: 'Roboto', sans-serif;
 }
 .full-width{
     width: 100%;
@@ -44,9 +46,9 @@ nav a{
 }
 
 .content{
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
-    background-color: lightgrey;
+    background-color: #FBFBF2;
     min-height: 85vh;
 }
 
@@ -81,4 +83,100 @@ footer{
     margin-top: 400px;
     font-family: 'Roboto', sans-serif;
     letter-spacing: 10px;
+}
+
+.teaser{
+    width: 60%;
+    margin: auto;
+    text-align: center;
+    padding: 100px 0px;
+}
+.teaser h1{
+    color: #164d35;
+}
+.teaser .teaser-row{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 50px;
+}
+
+.teaser-row .teaser-image{
+    width: 450px;
+    height: 450px;
+    background-color: #04AA6D;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 25%;
+}
+.teaser-row .teaser-text{
+    width: 450px;
+}
+.teaser-text h2{
+    color: #164d35;
+}
+.teaser-row .teaser-text p{
+    font-size: 20px;
+}
+
+#security{
+    background-image: url("../images/AdobeStock_208047326.jpeg");
+}
+
+/* account page styling */
+
+.title{
+    text-align: center;
+    padding: 50px 0px;
+    font-family: 'Roboto', sans-serif;
+}
+.accounts-container{
+    margin: 0 auto;
+    width: 100%;
+}
+.accounts-container table{
+    margin: 0 auto;
+    width: 80%;
+    border-collapse: collapse;
+}
+.accounts-container table td, .accounts-container table th{
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+.accounts-container table tr:nth-child(even){
+    background-color: #ddd;
+}
+.accounts-container table tr:hover {
+    background-color: #ccc;
+}
+.accounts-container table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04AA6D;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    color: white;
+}
+
+.actions{
+    width: 80%;
+    margin: 0 auto;
+    padding-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.actions button{
+    width: 150px;
+    height: 50px;
+    font-family: 'Roboto', sans-serif;
+    background-color: #04AA6D;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    color: #FBFBF2;
+    cursor: pointer;
 }

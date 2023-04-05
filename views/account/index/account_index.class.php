@@ -15,6 +15,7 @@ class AccountIndex extends IndexView
                     <th>Account No.</th>
                     <th>Account Type</th>
                     <th>Balance</th>
+                    <th>Transactions</th>
                 </tr>
             <?php
                 if($accounts === 0){
@@ -30,6 +31,7 @@ class AccountIndex extends IndexView
                         echo "<td>", $id, "</td>";
                         echo "<td>", $account_type, "</td>";
                         echo "<td>", $currency_type . $balance, "</td>";
+                        echo "<td>View All</td>";
 
                         echo "</tr>";
                     }
@@ -38,6 +40,12 @@ class AccountIndex extends IndexView
 
             ?>
             </table>
+
+            <div class="actions">
+                <button>New Account</button>
+                <button>eDeposit</button>
+                <button>Transfer</button>
+            </div>
         </div>
 
         <?php
