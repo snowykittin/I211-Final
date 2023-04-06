@@ -13,5 +13,3 @@ require_once ("vendor/autoload.php");
 
 //load the dispatcher that dissects a request URL
 new Dispatcher();
-
-//test commit
