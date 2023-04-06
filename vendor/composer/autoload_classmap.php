@@ -28,4 +28,5 @@ return array(
     'RegisterController' => $baseDir . '/controllers/register_controller.class.php',
     'RegisterModel' => $baseDir . '/models/register_model.class.php',
     'RegisterView' => $baseDir . '/views/register/register_view.class.php',
+    'Transaction' => $baseDir . '/models/account/transaction.class.php',
 );

@@ -29,6 +29,7 @@ class ComposerStaticInit1ead6ce07a3836fe5762e9902a70ffd1
         'RegisterController' => __DIR__ . '/../..' . '/controllers/register_controller.class.php',
         'RegisterModel' => __DIR__ . '/../..' . '/models/register_model.class.php',
         'RegisterView' => __DIR__ . '/../..' . '/views/register/register_view.class.php',
+        'Transaction' => __DIR__ . '/../..' . '/models/account/transaction.class.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

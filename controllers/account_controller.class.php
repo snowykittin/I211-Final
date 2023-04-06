@@ -23,6 +23,7 @@ class AccountController
     public function details($id){
         //retrieve specific account
         $account = $this->account_model->view_account($id);
+        $transactions = $this->account_model->list_transactions($id);
 
         if(!$account){
             //display error
@@ -30,7 +31,7 @@ class AccountController
         }
 
         $view = new AccountDetail();
-        $view->display($account);
+        $view->display($account, $transactions);
     }
 
 }

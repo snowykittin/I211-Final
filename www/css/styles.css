@@ -113,6 +113,10 @@ footer{
 .teaser-row .teaser-text{
     width: 450px;
 }
+.teaser-row .category .icon{
+    height: 68px;
+    padding-bottom: 10px;
+}
 .teaser-text h2{
     color: #164d35;
 }
@@ -121,7 +125,13 @@ footer{
 }
 
 #security{
-    background-image: url("../images/AdobeStock_208047326.jpeg");
+    background-image: linear-gradient(rgba(50, 168, 82, .6), rgba(50, 168, 82, .2)), url("../images/AdobeStock_208047326.jpeg");
+}
+#real-time{
+    background-image: linear-gradient(rgba(50, 168, 82, .6), rgba(50, 168, 82, .2)), url("../images/AdobeStock_575864152.jpeg");
+}
+#one-place{
+    background-image: linear-gradient(rgba(50, 168, 82, .6), rgba(50, 168, 82, .2)), url("../images/AdobeStock_569678687.jpeg");
 }
 
 /* about page styling */
@@ -234,7 +244,7 @@ footer{
 
 .account-details .tab-table{
     border: 1px solid #ddd;
-    min-height: 600px;
+    min-height: 400px;
     margin-bottom: 100px;
 }
 .account-details .tab-table .tab-navigation{
@@ -252,4 +262,30 @@ footer{
     padding: 0px 20px;
     font-size: 18px;
     color: #FBFBF2;
+    cursor: pointer;
+}
+/* transaction table  */
+.tab-container table{
+    width: 100%;
+    border-collapse: collapse;
+}
+.tab-container table td, .tab-container table th{
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+.tab-container table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+}
+/* details tab */
+.tab-container h2{
+    padding: 20px;
+    color: #164d35;
+}
+.tab-container .details-info{
+    padding: 0px 20px;
+    font-size: 18px;
 }

@@ -3,9 +3,10 @@
 class Account{
     private $id, $member_no, $account_type, $currency_type, $value;
 
-    public function __construct($account_type, $currency_type, $value){
+    public function __construct($account_type, $currency_type, $currency_symbol, $value){
         $this->account_type = $account_type;
         $this->currency_type = $currency_type;
+        $this->currency_symbol = $currency_symbol;
         $this->value = $value;
     }
 
@@ -42,6 +43,14 @@ class Account{
 
 
     public function getCurrencySymbol()
+    {
+        return $this->currency_symbol;
+    }
+    public function setCurrencySymbol($currency_symbol)
+    {
+        $this->currency_symbol = $currency_symbol;
+    }
+    public function getCurrencyType()
     {
         return $this->currency_type;
     }

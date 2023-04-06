@@ -49,7 +49,7 @@ class AccountModel
         $accounts = array();
         //loop recordsets
         while ($obj = $query->fetch_object()){
-            $account = new Account(stripslashes($obj->type_name),stripslashes($obj->currency_symbol),stripslashes($obj->value));
+            $account = new Account(stripslashes($obj->type_name),stripslashes($obj->currency_name),stripslashes($obj->currency_symbol),stripslashes($obj->value));
 
             $account->setId($obj->account_id);
 
@@ -60,7 +60,8 @@ class AccountModel
     }
 
     public function view_account($id){
-        $sql = "SELECT a.account_id, t.type_name, c.currency_symbol, a.value FROM account AS a LEFT JOIN acct_types AS t ON a.account_type = t.type_id LEFT JOIN currency AS c ON a.currency_type = c.currency_id WHERE a.account_id = '$id' ";
+        //query to obtain account information
+        $sql = "SELECT a.account_id, t.type_name, c.currency_name, c.currency_symbol, a.value FROM account AS a LEFT JOIN acct_types AS t ON a.account_type = t.type_id LEFT JOIN currency AS c ON a.currency_type = c.currency_id WHERE a.account_id = '$id' ";
 
         $query = $this->dbConnection->query($sql);
 
@@ -68,7 +69,7 @@ class AccountModel
             $obj = $query->fetch_object();
 
             //create an account object
-            $account = new Account(stripslashes($obj->type_name),stripslashes($obj->currency_symbol),stripslashes($obj->value));
+            $account = new Account(stripslashes($obj->type_name),stripslashes($obj->currency_name),stripslashes($obj->currency_symbol),stripslashes($obj->value));
 
             //set the id
             $account->setId($obj->account_id);
@@ -77,5 +78,33 @@ class AccountModel
         }
         return false;
 
+    }
+
+    public function list_transactions($id){
+        //query to obtain transactions
+        $sqlTrans = "SELECT * FROM transactions WHERE account_id=" . $id;
+
+        $queryTrans = $this->dbConnection->query($sqlTrans);
+
+        // if the query failed, return false.
+        if (!$queryTrans)
+            return false;
+
+        //if the query succeeded, but no accounts found.
+        if ($queryTrans->num_rows == 0)
+            return 0;
+
+        $transactions = array();
+        //loop recordsets
+        while ($obj = $queryTrans->fetch_object()){
+            $transaction = new Transaction(stripslashes($obj->transaction_date),stripslashes($obj->transaction_type),stripslashes($obj->amount),stripslashes($obj->description));
+
+            //set transaction_id
+            $transaction->setId($obj->transaction_id);
+
+            $transactions[] = $transaction;
+        }
+
+        return $transactions;
     }
 }
