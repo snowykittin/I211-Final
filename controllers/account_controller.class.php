@@ -80,4 +80,18 @@ class AccountController
         $search->display($account, $transactions);
 
     }
+
+    //make a deposit page
+    public function deposit(){
+
+        $view = new AccountDeposit();
+        $view->display();
+    }
+
+    //make a transfer page
+    public function transfer(){
+
+        $view = new AccountTransfer();
+        $view->display();
+    }
 }
