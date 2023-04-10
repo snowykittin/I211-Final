@@ -10,6 +10,7 @@ class ComposerStaticInit1ead6ce07a3836fe5762e9902a70ffd1
         'AboutView' => __DIR__ . '/../..' . '/views/about/about_view.class.php',
         'Account' => __DIR__ . '/../..' . '/models/account/account.class.php',
         'AccountController' => __DIR__ . '/../..' . '/controllers/account_controller.class.php',
+        'AccountCreate' => __DIR__ . '/../..' . '/views/account/create/account_create.class.php',
         'AccountDeposit' => __DIR__ . '/../..' . '/views/account/deposit/account_deposit.class.php',
         'AccountDetail' => __DIR__ . '/../..' . '/views/account/detail/account_detail.class.php',
         'AccountIndex' => __DIR__ . '/../..' . '/views/account/index/account_index.class.php',

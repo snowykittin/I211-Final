@@ -9,6 +9,7 @@ return array(
     'AboutView' => $baseDir . '/views/about/about_view.class.php',
     'Account' => $baseDir . '/models/account/account.class.php',
     'AccountController' => $baseDir . '/controllers/account_controller.class.php',
+    'AccountCreate' => $baseDir . '/views/account/create/account_create.class.php',
     'AccountDeposit' => $baseDir . '/views/account/deposit/account_deposit.class.php',
     'AccountDetail' => $baseDir . '/views/account/detail/account_detail.class.php',
     'AccountIndex' => $baseDir . '/views/account/index/account_index.class.php',

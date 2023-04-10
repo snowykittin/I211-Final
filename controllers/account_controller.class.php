@@ -94,4 +94,10 @@ class AccountController
         $view = new AccountTransfer();
         $view->display();
     }
+
+    //create a new bank account page - visible to admin's only
+    public function create(){
+        $view = new AccountCreate();
+        $view->display();
+    }
 }
