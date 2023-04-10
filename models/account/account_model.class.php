@@ -146,7 +146,38 @@ class AccountModel
     }
 
     //search through a particular set of transactions for an account
-    public function search_transactions($id, $terms){
+    public function search_transactions($terms, $id){
         $terms = explode(" ", $terms); //explode multiple terms into an array
+
+        //search query
+        $sql = "SELECT * FROM transactions WHERE account_id=" . $id . " AND (1";
+        foreach($terms as $term){
+            $sql .= " AND transaction_type LIKE '%" . $term . "%' OR description LIKE '%" . $term . "%'";
+        }
+        $sql .= ")";
+
+        $query = $this->dbConnection->query($sql);
+        // the search failed, return false.
+        if (!$query)
+            return false;
+
+        //search succeeded, but no transactions were found.
+        if ($query->num_rows == 0)
+            return 0;
+
+        //successfully found at least one transaction
+        $transactions = array();
+        //loop recordsets
+        while ($obj = $query->fetch_object()){
+            $transaction = new Transaction(stripslashes($obj->transaction_date),stripslashes($obj->transaction_type),stripslashes($obj->amount),stripslashes($obj->description));
+
+            //set transaction_id
+            $transaction->setId($obj->transaction_id);
+
+            $transactions[] = $transaction;
+        }
+
+        return $transactions;
+
     }
 }

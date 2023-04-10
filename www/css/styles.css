@@ -321,8 +321,7 @@ footer{
 }
 .tab-navigation .tab-search input[type=text]{
     border: none;
-    padding: 20px;
-    color: #FBFBF2;
+    padding: 18px;
 }
 
 .tab-navigation .tab-search input[type=submit]{

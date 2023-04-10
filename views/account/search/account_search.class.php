@@ -16,7 +16,7 @@ class AccountSearch extends IndexView
                     <th style="width: 50%;">Balance</th>
                     <th class="acctSearch">
                         <form method="get" action="<?= BASE_URL ?>/account/search_accounts">
-                            <input type="text" placeholder="Search accounts..." name="query-terms" id="accountsearchbox" required />
+                            <input type="text" placeholder="Search accounts..." name="query-terms" id="accountsearchbox" />
                             <input type="submit" value="Search" />
                         </form>
                     </th>
@@ -35,7 +35,7 @@ class AccountSearch extends IndexView
                         echo "<td>", $id, "</td>";
                         echo "<td>", $account_type, "</td>";
                         echo "<td>", $currency_symbol . $balance, "</td>";
-                        echo "<td style='text-align: right;'><a href='account/details/$id'>View Details</a></td>";
+                        echo "<td style='text-align: right;'><a href='".BASE_URL."/account/details/$id'>View Details</a></td>";
 
                         echo "</tr>";
                     }
