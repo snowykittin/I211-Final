@@ -80,6 +80,11 @@ class AccountDetail extends IndexView
                 </div>
 
             </div>
+
+            <div class="actions">
+                <a href="<?= BASE_URL ?>/account/deposit"><button>eDeposit</button></a>
+                <a href="<?= BASE_URL ?>/account/transfer"><button>Transfer</button></a>
+            </div>
         </div>
 
     <?php
