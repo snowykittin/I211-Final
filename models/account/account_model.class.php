@@ -59,6 +59,7 @@ class AccountModel
         return $accounts;
     }
 
+    //view the details of a specific account page, matching the id
     public function view_account($id){
         //query to obtain account information
         $sql = "SELECT a.account_id, t.type_name, c.currency_name, c.currency_symbol, a.value FROM account AS a LEFT JOIN acct_types AS t ON a.account_type = t.type_id LEFT JOIN currency AS c ON a.currency_type = c.currency_id WHERE a.account_id = '$id' ";
@@ -80,6 +81,42 @@ class AccountModel
 
     }
 
+    //search for a particular account
+    public function search_accounts($terms){
+        $terms = explode(" ", $terms); //explode multiple terms into an array
+
+        //select statement, and then search
+        $sql = "SELECT a.account_id, t.type_name, c.currency_symbol, a.value FROM account AS a LEFT JOIN acct_types AS t ON a.account_type = t.type_id LEFT JOIN currency AS c ON a.currency_type = c.currency_id WHERE (1";
+        foreach($terms as $term){
+            $sql.= " AND t.type_name LIKE '%" . $term . "%' OR a.account_id LIKE '%" . $term . "%'";
+        }
+        $sql .= ")";
+
+        $query = $this->dbConnection->query($sql);
+        // the search failed, return false.
+        if (!$query)
+            return false;
+
+        //search succeeded, but no account was found.
+        if ($query->num_rows == 0)
+            return 0;
+
+        //search succeeded and found at least one account
+        $accounts = array();
+
+        //loop recordsets
+        while ($obj = $query->fetch_object()){
+            $account = new Account(stripslashes($obj->type_name),stripslashes($obj->currency_name),stripslashes($obj->currency_symbol),stripslashes($obj->value));
+
+            $account->setId($obj->account_id);
+
+            $accounts[] = $account;
+        }
+
+        return $accounts;
+    }
+
+    //list all transactions related to a specific account
     public function list_transactions($id){
         //query to obtain transactions
         $sqlTrans = "SELECT * FROM transactions WHERE account_id=" . $id;
@@ -106,5 +143,10 @@ class AccountModel
         }
 
         return $transactions;
+    }
+
+    //search through a particular set of transactions for an account
+    public function search_transactions($id, $terms){
+        $terms = explode(" ", $terms); //explode multiple terms into an array
     }
 }

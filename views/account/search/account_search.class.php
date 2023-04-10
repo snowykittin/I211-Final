@@ -1,13 +1,12 @@
 <?php
-
-class AccountIndex extends IndexView
+class AccountSearch extends IndexView
 {
     public function display($accounts){
-        parent::displayHeader("Infinibank - Account Summary");
-        ?>
+        parent::displayHeader("Infinibank - Account Search");
+    ?>
 
         <div class="title">
-            <h1>Showing All Accounts</h1>
+            <h1>Showing Matched Accounts</h1>
         </div>
         <div class="accounts-container">
             <table>
@@ -17,12 +16,12 @@ class AccountIndex extends IndexView
                     <th style="width: 50%;">Balance</th>
                     <th class="acctSearch">
                         <form method="get" action="<?= BASE_URL ?>/account/search_accounts">
-                        <input type="text" placeholder="Search accounts..." name="query-terms" id="accountsearchbox" required />
-                        <input type="submit" value="Search" />
+                            <input type="text" placeholder="Search accounts..." name="query-terms" id="accountsearchbox" required />
+                            <input type="submit" value="Search" />
                         </form>
                     </th>
                 </tr>
-            <?php
+                <?php
                 if($accounts === 0){
                     echo "Sorry, no accounts have been found.";
                 }
@@ -43,7 +42,7 @@ class AccountIndex extends IndexView
 
                 }
 
-            ?>
+                ?>
             </table>
 
             <div class="actions">
@@ -53,9 +52,7 @@ class AccountIndex extends IndexView
             </div>
         </div>
 
-        <?php
+    <?php
         parent::displayFooter();
     }
-
-
 }

@@ -14,6 +14,7 @@ class ComposerStaticInit1ead6ce07a3836fe5762e9902a70ffd1
         'AccountDetail' => __DIR__ . '/../..' . '/views/account/detail/account_detail.class.php',
         'AccountIndex' => __DIR__ . '/../..' . '/views/account/index/account_index.class.php',
         'AccountModel' => __DIR__ . '/../..' . '/models/account/account_model.class.php',
+        'AccountSearch' => __DIR__ . '/../..' . '/views/account/search/account_search.class.php',
         'ComposerAutoloaderInit1ead6ce07a3836fe5762e9902a70ffd1' => __DIR__ . '/..' . '/composer/autoload_real.php',
         'Composer\\Autoload\\ClassLoader' => __DIR__ . '/..' . '/composer/ClassLoader.php',
         'Composer\\Autoload\\ComposerStaticInit1ead6ce07a3836fe5762e9902a70ffd1' => __DIR__ . '/..' . '/composer/autoload_static.php',
@@ -30,6 +31,7 @@ class ComposerStaticInit1ead6ce07a3836fe5762e9902a70ffd1
         'RegisterModel' => __DIR__ . '/../..' . '/models/register_model.class.php',
         'RegisterView' => __DIR__ . '/../..' . '/views/register/register_view.class.php',
         'Transaction' => __DIR__ . '/../..' . '/models/account/transaction.class.php',
+        'TransactionSearch' => __DIR__ . '/../..' . '/views/account/search/transaction_search.class.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

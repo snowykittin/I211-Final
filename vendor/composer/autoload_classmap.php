@@ -13,6 +13,7 @@ return array(
     'AccountDetail' => $baseDir . '/views/account/detail/account_detail.class.php',
     'AccountIndex' => $baseDir . '/views/account/index/account_index.class.php',
     'AccountModel' => $baseDir . '/models/account/account_model.class.php',
+    'AccountSearch' => $baseDir . '/views/account/search/account_search.class.php',
     'ComposerAutoloaderInit1ead6ce07a3836fe5762e9902a70ffd1' => $vendorDir . '/composer/autoload_real.php',
     'Composer\\Autoload\\ClassLoader' => $vendorDir . '/composer/ClassLoader.php',
     'Composer\\Autoload\\ComposerStaticInit1ead6ce07a3836fe5762e9902a70ffd1' => $vendorDir . '/composer/autoload_static.php',
@@ -29,4 +30,5 @@ return array(
     'RegisterModel' => $baseDir . '/models/register_model.class.php',
     'RegisterView' => $baseDir . '/views/register/register_view.class.php',
     'Transaction' => $baseDir . '/models/account/transaction.class.php',
+    'TransactionSearch' => $baseDir . '/views/account/search/transaction_search.class.php',
 );

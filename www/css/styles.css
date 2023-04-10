@@ -205,11 +205,33 @@ footer{
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #04AA6D;
+    background-color: #368a65;
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
     font-weight: normal;
     color: white;
+}
+.accounts-container table .acctSearch{
+    width: 20%;
+    background-color: #368a65;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    color: white;
+    padding: 0;
+}
+.acctSearch input[type=text]{
+    height: 100%;
+    padding: 12px;
+    width: 150px;
+}
+.acctSearch input[type=submit]{
+    height: 100%;
+    padding: 12px;
+    background: none;
+    border: none;
+    color: #FBFBF2;
+    cursor: pointer;
 }
 .accounts-container table tr a{
     text-decoration: none;
@@ -229,7 +251,7 @@ footer{
     width: 150px;
     height: 50px;
     font-family: 'Roboto', sans-serif;
-    background-color: #04AA6D;
+    background-color: #368a65;
     border: none;
     border-radius: 10px;
     font-size: 18px;
@@ -253,8 +275,12 @@ footer{
     background-color: #368a65;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
-.tab-navigation button{
+.tab-navs{
+    height: 100%;
+}
+.tab-navigation .tab-navs button{
     height: 100%;
     border: none;
     border-right: 1px solid #164d35;
@@ -288,4 +314,23 @@ footer{
 .tab-container .details-info{
     padding: 0px 20px;
     font-size: 18px;
+}
+.tab-navigation .tab-search{
+    width: fit-content;
+    height: 100%;
+}
+.tab-navigation .tab-search input[type=text]{
+    border: none;
+    padding: 20px;
+    color: #FBFBF2;
+}
+
+.tab-navigation .tab-search input[type=submit]{
+    border: none;
+    height: 100%;
+    background: none;
+    padding: 0 20px;
+    font-size: 18px;
+    color: #FBFBF2;
+    cursor: pointer;
 }

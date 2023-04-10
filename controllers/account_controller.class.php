@@ -34,4 +34,25 @@ class AccountController
         $view->display($account, $transactions);
     }
 
+    // account search
+    public function search_accounts(){
+        //retrieve terms from search
+        $query_terms = trim($_GET['query-terms']);
+
+        //if empty, simply go back to listing all accounts
+        if($query_terms == "")
+            $this->index();
+
+        //search database for matching accounts
+        $accounts = $this->account_model->search_accounts($query_terms);
+
+        if($accounts === false){
+            // handle error
+            $this->index();
+        }
+        //display matched accounts
+        $search = new AccountSearch();
+        $search->display($accounts);
+    }
+
 }

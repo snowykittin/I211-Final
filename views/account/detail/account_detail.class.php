@@ -21,13 +21,23 @@ class AccountDetail extends IndexView
         <div class="account-details">
             <div class="tab-table">
                 <div class="tab-navigation">
+                    <div class="tab-navs">
                     <button class="tab-nav-item" onclick="openTab('Transactions')">Transactions</button>
                     <button class="tab-nav-item" onclick="openTab('Details')">Account Details</button>
+                    </div>
+                    <div class="tab-search">
+                        <form method="get" action="<?= BASE_URL ?>/account/search_transactions">
+                            <input type="hidden" id="account_id" value="<?= $account_id ?>" />
+                            <input type="text" placeholder="Search transactions..." name="query-terms" id="transactionsearchbox" required />
+                            <input type="submit" value="Search" />
+                        </form>
+                    </div>
                 </div>
 
                 <div id="Transactions" class="tab-container tab">
                     <table>
                         <tr>
+                            <th>ID</th>
                             <th>Date</th>
                             <th>Amount</th>
                             <th>Type</th>
@@ -39,11 +49,13 @@ class AccountDetail extends IndexView
                             }
                             else{
                                 foreach($transactions as $i => $transaction){
+                                    $id = $transaction->getId();
                                     $date = $transaction->getTransactionDate();
                                     $type = $transaction->getTransactionType();
                                     $amount = $transaction->getAmount();
                                     $description = $transaction->getDescription();
                                     echo "<tr>";
+                                    echo "<td>", $id, "</td>";
                                     echo "<td>", $date, "</td>";
                                     echo "<td>", $amount, "</td>";
                                     echo "<td>", $type, "</td>";
