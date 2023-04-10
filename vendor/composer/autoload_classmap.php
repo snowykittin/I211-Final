@@ -6,7 +6,6 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'AboutController' => $baseDir . '/controllers/about_controller.class.php',
     'AboutView' => $baseDir . '/views/about/about_view.class.php',
     'Account' => $baseDir . '/models/account/account.class.php',
     'AccountController' => $baseDir . '/controllers/account_controller.class.php',
