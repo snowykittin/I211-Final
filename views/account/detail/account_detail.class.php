@@ -45,7 +45,7 @@ class AccountDetail extends IndexView
                         </tr>
                         <?php
                             if($transactions === 0){
-                                echo "<tr><td colspan='4'>No transactions exist at this time.</td></tr>";
+                                echo "<tr><td colspan='5'>No transactions exist at this time.</td></tr>";
                             }
                             else{
                                 foreach($transactions as $i => $transaction){

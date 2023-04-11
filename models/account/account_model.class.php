@@ -232,26 +232,24 @@ class AccountModel
     //create a new account
     public function create_account(){
         //check for post data. if not there, terminate immediately
-        if(!filter_has_var(INPUT_POST, 'member_no') || !filter_has_var(INPUT_POST, 'account_type') || !filter_has_var(INPUT_POST, 'currency_type') || !filter_has_var(INPUT_POST, 'deposit') )
+        if(!filter_has_var(INPUT_POST, 'member_no') || !filter_has_var(INPUT_POST, 'account_type') || !filter_has_var(INPUT_POST, 'currency_type'))
             return false;
 
         //retrieve values, sanitize for security
-        $member_no = $this->dbConnection->filter_input(INPUT_POST, 'member_no', FILTER_SANITIZE_NUMBER_INT);
-        $account_type = $this->dbConnection->filter_input(INPUT_POST, 'member_no', FILTER_SANITIZE_NUMBER_INT);
-        $currency_type = $this->dbConnection->filter_input(INPUT_POST, 'member_no', FILTER_SANITIZE_NUMBER_INT);
-        $deposit = $this->dbConnection->filter_input(INPUT_POST, 'deposit', FILTER_SANITIZE_NUMBER_FLOAT,
-            FILTER_FLAG_ALLOW_FRACTION);
+        $member_no = filter_input(INPUT_POST, 'member_no', FILTER_SANITIZE_NUMBER_INT);
+        $account_type = filter_input(INPUT_POST, 'account_type', FILTER_SANITIZE_NUMBER_INT);
+        $currency_type = filter_input(INPUT_POST, 'currency_type', FILTER_SANITIZE_NUMBER_INT);
+        $deposit = 0.00;
 
         //query string for account creation
-        $sql = "INSERT INTO accounts (member_no, account_type, currency_type, value) VALUES (" . $member_no . ", " . $account_type . ", " . $currency_type . ", " . $deposit . ")";
+        $sql = "INSERT INTO account VALUES (NULL, '$member_no', '$account_type', ' $currency_type', '$deposit');";
 
-        //execute the query
         return $this->dbConnection->query($sql);
     }
-    //deposit transaction - requires account id
+    //deposit transaction
     public function deposit(){
         //create new transaction
-        $sql = "INSERT INTO transactions (account_id, transaction_date, transaction_type, amount, description) VALUES ()";
+        $sql = "INSERT INTO transactions VALUES (NULL, '','','','','')";
 
         //calculate and update new bank balance
 

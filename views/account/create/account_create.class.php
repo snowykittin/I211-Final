@@ -20,9 +20,9 @@ class AccountCreate extends IndexView
                     <!-- PHP TO LOOP THROUGH TYPES HERE -->
                     <?php
                         foreach($types as $i => $type){
-                            $id = $type->getId();
-                            $name = $type->getName();
-                            echo "<option value='$id'>$name</option>";
+                            $idType = $type->getId();
+                            $nameType = $type->getName();
+                            echo "<option value='$idType'>$nameType</option>";
                         }
 
                     ?>
@@ -40,9 +40,6 @@ class AccountCreate extends IndexView
 
                     ?>
                 </select>
-
-                <label for="deposit">Initial Deposit:</label>
-                <input name="deposit" type="number" step="0.01">
 
                 <div class="form-row">
                     <input type="submit" name="action" value="Create Account">
