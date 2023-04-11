@@ -180,4 +180,80 @@ class AccountModel
         return $transactions;
 
     }
+
+    //list all account types
+    public function list_types(){
+        $sql = "SELECT * FROM acct_types";
+        $query = $this->dbConnection->query($sql);
+
+        // if the query failed, return false.
+        if (!$query)
+            return false;
+
+        //if the query succeeded, but no types found.
+        if ($query->num_rows == 0)
+            return 0;
+
+        $types = array();
+        while($obj = $query->fetch_object()){
+            $type = new AccountType(stripslashes($obj->type_name));
+            $type->setId($obj->type_id);
+
+            $types[] = $type;
+        }
+
+        return $types;
+    }
+    //list all currency types
+    public function list_currencies(){
+        $sql = "SELECT * FROM currency";
+        $query = $this->dbConnection->query($sql);
+
+        // if the query failed, return false.
+        if (!$query)
+            return false;
+
+        //if the query succeeded, but no currencies found.
+        if ($query->num_rows == 0)
+            return 0;
+
+        $currencies = array();
+        while($obj = $query->fetch_object()){
+            $currency = new Currency(stripslashes($obj->currency_name),stripslashes($obj->currency_symbol),stripslashes($obj->currency_type));
+
+            $currency->setId($obj->currency_id);
+
+            $currencies[] = $currency;
+        }
+
+        return $currencies;
+    }
+
+    //create a new account
+    public function create_account(){
+        //check for post data. if not there, terminate immediately
+        if(!filter_has_var(INPUT_POST, 'member_no') || !filter_has_var(INPUT_POST, 'account_type') || !filter_has_var(INPUT_POST, 'currency_type') || !filter_has_var(INPUT_POST, 'deposit') )
+            return false;
+
+        //retrieve values, sanitize for security
+        $member_no = $this->dbConnection->filter_input(INPUT_POST, 'member_no', FILTER_SANITIZE_NUMBER_INT);
+        $account_type = $this->dbConnection->filter_input(INPUT_POST, 'member_no', FILTER_SANITIZE_NUMBER_INT);
+        $currency_type = $this->dbConnection->filter_input(INPUT_POST, 'member_no', FILTER_SANITIZE_NUMBER_INT);
+        $deposit = $this->dbConnection->filter_input(INPUT_POST, 'deposit', FILTER_SANITIZE_NUMBER_FLOAT,
+            FILTER_FLAG_ALLOW_FRACTION);
+
+        //query string for account creation
+        $sql = "INSERT INTO accounts (member_no, account_type, currency_type, value) VALUES (" . $member_no . ", " . $account_type . ", " . $currency_type . ", " . $deposit . ")";
+
+        //execute the query
+        return $this->dbConnection->query($sql);
+    }
+    //deposit transaction - requires account id
+    public function deposit(){
+        //create new transaction
+        $sql = "INSERT INTO transactions (account_id, transaction_date, transaction_type, amount, description) VALUES ()";
+
+        //calculate and update new bank balance
+
+    }
 }

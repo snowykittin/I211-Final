@@ -52,7 +52,7 @@ class AccountDetail extends IndexView
                                     $id = $transaction->getId();
                                     $date = $transaction->getTransactionDate();
                                     $type = $transaction->getTransactionType();
-                                    $amount = $transaction->getAmount();
+                                    $amount = $account->getCurrencySymbol() . $transaction->getAmount();
                                     $description = $transaction->getDescription();
                                     echo "<tr>";
                                     echo "<td>", $id, "</td>";

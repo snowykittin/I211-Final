@@ -96,8 +96,29 @@ class AccountController
     }
 
     //create a new bank account page - visible to admin's only
-    public function create(){
+    public function new_account(){
+        //get the currency types
+        $currencies = $this->account_model->list_currencies();
+        $types = $this->account_model->list_types();
+
         $view = new AccountCreate();
-        $view->display();
+        $view->display($types, $currencies);
+    }
+    //run sql to create account, then take to account listing
+    public function create(){
+        //create new account
+        $new_account = $this->account_model->create_account();
+        if (!$new_account) {
+            //display an error
+            $message = "There was a problem making your account.";
+            $this->error($message);
+            return;
+        }
+
+        $accounts = $this->account_model->list_accounts();
+        //show accounts page
+        $view = new AccountIndex();
+        $view->display($accounts);
+
     }
 }
