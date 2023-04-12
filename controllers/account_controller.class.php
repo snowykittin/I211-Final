@@ -19,6 +19,12 @@ class AccountController
         $view->display($accounts);
     }
 
+    //error function
+    public function error($message){
+        $view = new ErrorView();
+        $view->display($message);
+    }
+
 //    //show a specific account's details
     public function details($id){
         //retrieve specific account
@@ -101,8 +107,7 @@ class AccountController
         $transaction = $this->account_model->make_transaction();
 
         if(!$transaction){
-            $view = new ErrorView();
-            $view->display($transaction);
+            $this->error($transaction);
         }else{
             //go back to account details page
             $this->details($id);
