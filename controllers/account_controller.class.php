@@ -19,6 +19,12 @@ class AccountController
         $view->display($accounts);
     }
 
+    //error function
+    public function error($message){
+        $view = new ErrorView();
+        $view->display($message);
+    }
+
 //    //show a specific account's details
     public function details($id){
         //retrieve specific account
@@ -81,18 +87,31 @@ class AccountController
 
     }
 
-    //make a deposit page
-    public function deposit(){
+    //make a transaction page
+    public function make_transaction($id){
+        //retrieve specific account
+        $account = $this->account_model->view_account($id);
 
-        $view = new AccountDeposit();
-        $view->display();
+        if(!$account){
+            //display error
+            return "We're sorry, your account cannot be found to make a transaction.";
+        }
+
+        $view = new AccountTransaction();
+        $view->display($account);
     }
 
-    //make a transfer page
-    public function transfer(){
+    //make a transaction
+    public function transaction($id){
+        //make the transaction
+        $transaction = $this->account_model->make_transaction();
 
-        $view = new AccountTransfer();
-        $view->display();
+        if(!$transaction){
+            $this->error($transaction);
+        }else{
+            //go back to account details page
+            $this->details($id);
+        }
     }
 
     //create a new bank account page - visible to admin's only

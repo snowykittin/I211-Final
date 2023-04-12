@@ -45,10 +45,9 @@ class AccountSearch extends IndexView
                 ?>
             </table>
 
+<!--            ADMIN VIEW ONLY -->
             <div class="actions">
                 <a href="<?= BASE_URL ?>/account/new_account"><button>New Account</button></a>
-                <a href="<?= BASE_URL ?>/account/deposit"><button>eDeposit</button></a>
-                <a href="<?= BASE_URL ?>/account/transfer"><button>Transfer</button></a>
             </div>
         </div>
 
