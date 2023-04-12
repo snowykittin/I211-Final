@@ -243,12 +243,13 @@ footer{
     width: 80%;
     margin: 0 auto;
     padding-top: 50px;
+    padding-bottom: 50px;
     display: flex;
     align-items: center;
     justify-content: space-around;
 }
 .actions button{
-    width: 150px;
+    width: 175px;
     height: 50px;
     font-family: 'Roboto', sans-serif;
     background-color: #368a65;
@@ -356,7 +357,7 @@ footer{
     margin-top: 50px;
 }
 .create-account-form .form-row input{
-    width: 150px;
+    width: 175px;
     height: 50px;
     font-family: 'Roboto', sans-serif;
     background-color: #368a65;

@@ -82,8 +82,7 @@ class TransactionSearch extends IndexView
             </div>
 
             <div class="actions">
-                <a href="<?= BASE_URL ?>/account/deposit"><button>eDeposit</button></a>
-                <a href="<?= BASE_URL ?>/account/transfer"><button>Transfer</button></a>
+                <a href="<?= BASE_URL ?>/account/make_transaction/<?= $account_id ?>"><button>Make a Transaction</button></a>
             </div>
         </div>
 

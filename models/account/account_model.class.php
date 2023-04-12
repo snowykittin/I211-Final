@@ -246,12 +246,33 @@ class AccountModel
 
         return $this->dbConnection->query($sql);
     }
-    //deposit transaction
-    public function deposit(){
-        //create new transaction
-        $sql = "INSERT INTO transactions VALUES (NULL, '','','','','')";
+    //make a transaction
+    public function make_transaction(){
+        //create new transaction, update balance
+        //check for post data
+        if(!filter_has_var(INPUT_POST,'account_id') || !filter_has_var(INPUT_POST,'transaction_type') || !filter_has_var(INPUT_POST,'amount')  || !filter_has_var(INPUT_POST,'current_balance   ') || !filter_has_var(INPUT_POST,'description'))
+            return false;
 
-        //calculate and update new bank balance
+        //retrieve values, sanitize for security
+        $account_id = filter_input(INPUT_POST, 'account_id', FILTER_SANITIZE_NUMBER_INT);
+        $transaction_type = filter_input(INPUT_POST, 'transaction_type', FILTER_SANITIZE_STRING);
+        $amount = filter_input(INPUT_POST, 'amount', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        $current_balance = filter_input(INPUT_POST, 'current_balance', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        $description =  filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
 
+        //calculate and update new bank balance, make transaction
+        if($transaction_type === 'deposit'){
+            $new_balance = $amount + $current_balance;
+        }else{
+            $new_balance = $current_balance - $amount;
+        }
+        $sql = "UPDATE account SET value = '$new_balance' WHERE account_id = '$account_id'; INSERT INTO transactions VALUES (NULL, '$account_id', DEFAULT, '$transaction_type', '$amount', '$description');";
+        $queries = $this->dbConnection->multi_query($sql);
+
+        if($queries){
+            return $queries;
+        }else{
+            return false;
+        }
     }
 }
