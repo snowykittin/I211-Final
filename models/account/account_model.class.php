@@ -47,7 +47,7 @@ class AccountModel
             return 0;
 
         $accounts = array();
-        //loop recordsets
+        //loop record sets
         while ($obj = $query->fetch_object()){
             $account = new Account(stripslashes($obj->type_name),stripslashes($obj->currency_name),stripslashes($obj->currency_symbol),stripslashes($obj->value));
 
@@ -104,7 +104,7 @@ class AccountModel
         //search succeeded and found at least one account
         $accounts = array();
 
-        //loop recordsets
+        //loop record sets
         while ($obj = $query->fetch_object()){
             $account = new Account(stripslashes($obj->type_name),stripslashes($obj->currency_name),stripslashes($obj->currency_symbol),stripslashes($obj->value));
 
@@ -132,7 +132,7 @@ class AccountModel
             return 0;
 
         $transactions = array();
-        //loop recordsets
+        //loop record sets
         while ($obj = $queryTrans->fetch_object()){
             $transaction = new Transaction(stripslashes($obj->transaction_date),stripslashes($obj->transaction_type),stripslashes($obj->amount),stripslashes($obj->description));
 
@@ -167,7 +167,7 @@ class AccountModel
 
         //successfully found at least one transaction
         $transactions = array();
-        //loop recordsets
+        //loop record sets
         while ($obj = $query->fetch_object()){
             $transaction = new Transaction(stripslashes($obj->transaction_date),stripslashes($obj->transaction_type),stripslashes($obj->amount),stripslashes($obj->description));
 
@@ -250,7 +250,7 @@ class AccountModel
     public function make_transaction(){
         //create new transaction, update balance
         //check for post data
-        if(!filter_has_var(INPUT_POST,'account_id') || !filter_has_var(INPUT_POST,'transaction_type') || !filter_has_var(INPUT_POST,'amount')  || !filter_has_var(INPUT_POST,'current_balance   ') || !filter_has_var(INPUT_POST,'description'))
+        if(!filter_has_var(INPUT_POST,'account_id') || !filter_has_var(INPUT_POST,'transaction_type') || !filter_has_var(INPUT_POST,'amount')  || !filter_has_var(INPUT_POST,'current_balance') || !filter_has_var(INPUT_POST,'description'))
             return false;
 
         //retrieve values, sanitize for security
@@ -261,18 +261,21 @@ class AccountModel
         $description =  filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
 
         //calculate and update new bank balance, make transaction
-        if($transaction_type === 'deposit'){
-            $new_balance = $amount + $current_balance;
+        if($transaction_type == 'deposit'){
+            $new_balance = (float)$amount + (float)$current_balance;
         }else{
-            $new_balance = $current_balance - $amount;
+            $new_balance = (float)$current_balance - (float)$amount;
         }
-        $sql = "UPDATE account SET value = '$new_balance' WHERE account_id = '$account_id'; INSERT INTO transactions VALUES (NULL, '$account_id', DEFAULT, '$transaction_type', '$amount', '$description');";
-        $queries = $this->dbConnection->multi_query($sql);
+        //UPDATE account SET value = '$new_balance' WHERE account_id = '$account_id';
+        $sql1 = "INSERT INTO transactions VALUES (NULL, '$account_id', DEFAULT, '$transaction_type', '$amount', '$description');";
+        $sql2 = "UPDATE account SET value = '$new_balance' WHERE account_id = '$account_id';";
 
-        if($queries){
-            return $queries;
-        }else{
+        $query = $this->dbConnection->query($sql1);
+        $query2 = $this->dbConnection->query($sql2);
+
+        if(!$query || !$query2)
             return false;
-        }
+
+        return true;
     }
 }

@@ -17,7 +17,7 @@ class AccountTransaction extends IndexView
         <div class="create-account-form">
             <form action="<?= BASE_URL ?>/account/transaction/<?= $account_id ?>" method="post">
                 <label for="account_id">Account Number:</label>
-                <input name="account_id" type="number" value="<?= $account_id ?>" disabled="disabled" required>
+                <input name="account_id" id="account_id" type="number" value="<?= $account_id ?>" required>
 
                 <label for="transaction_type">Transaction Type:</label>
                 <select id="transaction_type" name="transaction_type" required>
@@ -33,7 +33,7 @@ class AccountTransaction extends IndexView
                 <input type="text" name="description" maxlength="500" required>
 
                 <div class="form-row">
-                    <input type="submit" name="action" value="Make Transaction">
+                    <input type="submit" name="submit" value="Make Transaction">
                     <input type="button" value="Cancel" onclick='window.location.href = "<?= BASE_URL ?>/account/detail/<?= $account_id ?>"'>
                 </div>
             </form>

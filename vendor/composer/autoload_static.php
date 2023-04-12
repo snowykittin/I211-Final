@@ -24,6 +24,7 @@ class ComposerStaticInit1ead6ce07a3836fe5762e9902a70ffd1
         'Currency' => __DIR__ . '/../..' . '/models/account/currency.class.php',
         'Database' => __DIR__ . '/../..' . '/application/database.class.php',
         'Dispatcher' => __DIR__ . '/../..' . '/application/dispatcher.class.php',
+        'ErrorView' => __DIR__ . '/../..' . '/views/error.class.php',
         'HomeController' => __DIR__ . '/../..' . '/controllers/home_controller.class.php',
         'HomeIndex' => __DIR__ . '/../..' . '/views/home/home_index.class.php',
         'IndexView' => __DIR__ . '/../..' . '/views/index_view.class.php',

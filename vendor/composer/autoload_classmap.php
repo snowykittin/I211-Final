@@ -23,6 +23,7 @@ return array(
     'Currency' => $baseDir . '/models/account/currency.class.php',
     'Database' => $baseDir . '/application/database.class.php',
     'Dispatcher' => $baseDir . '/application/dispatcher.class.php',
+    'ErrorView' => $baseDir . '/views/error.class.php',
     'HomeController' => $baseDir . '/controllers/home_controller.class.php',
     'HomeIndex' => $baseDir . '/views/home/home_index.class.php',
     'IndexView' => $baseDir . '/views/index_view.class.php',

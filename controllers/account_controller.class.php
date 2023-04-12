@@ -101,8 +101,8 @@ class AccountController
         $transaction = $this->account_model->make_transaction();
 
         if(!$transaction){
-            //go back to home
-            $this->index();
+            $view = new ErrorView();
+            $view->display($transaction);
         }else{
             //go back to account details page
             $this->details($id);
