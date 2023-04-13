@@ -14,7 +14,7 @@ class UserModel
     {
         $this->db = Database::getDatabase();
         $this->dbConnection = $this->db->getConnection();
-        $this->tblUsers = $this->db->getUsersTable();
+        $this->tblUsers = $this->db->getMembersTable();
     }
 
     // static method to ensure there is a User instance
@@ -115,7 +115,7 @@ class UserModel
             // set the users role to 2 (2 will be default user)
             $role = 2;
 
-            $sql = "INSERT INTO " . $this->db->getUsersTable() . " VALUES(NULL, '$username', '$hashed_password', '$firstname', '$lastname', '$email', '$role')";
+            $sql = "INSERT INTO " . $this->db->getMembersTable() . " VALUES(NULL, '$username', '$hashed_password', '$firstname', '$lastname', '$email', '$role')";
 
             //execute the query and return true if successful or false if failed
             if ($this->dbConnection->query($sql) === TRUE) {
@@ -156,7 +156,7 @@ class UserModel
 
 
         //sql statement to filter the users table data with a username
-        $sql = "SELECT password FROM " . $this->db->getUsersTable() . " WHERE username='$username'";
+        $sql = "SELECT password FROM " . $this->db->getMembersTable() . " WHERE username='$username'";
 
         //execute the query
         $query = $this->dbConnection->query($sql);
@@ -169,7 +169,7 @@ class UserModel
                 if (password_verify($password, $hash)) {
                     setcookie("username", $username, time() + 60, "/");
                     try {
-                        $sql = "SELECT * FROM " . $this->db->getUsersTable() . " WHERE username='$username'";
+                        $sql = "SELECT * FROM " . $this->db->getMembersTable() . " WHERE username='$username'";
                         $query = $this->dbConnection->query($sql);
                         if (!$query) {
                             throw new UserIssueException("The Sql or Query failed.");

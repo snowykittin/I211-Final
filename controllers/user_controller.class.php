@@ -137,14 +137,6 @@ class UserController
         $error->display($message);
     }
 
-    public function manierror($message)
-    {
-        //create an object of the user manipulation errors
-        $error = new UserManiError();
-        //display
-        $error->display($message);
-    }
-
     // delete display
     public function deleteDisplay($id)
     {
