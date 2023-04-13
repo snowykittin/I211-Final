@@ -13,7 +13,7 @@ class AccountController
         }
         //check the user's admin access and member-id
         if(!isset($_SESSION['privilege'])){
-            $_SESSION['privilege'] = true;
+            $_SESSION['privilege'] = false;
         }
         if(!isset($_SESSION['member-id'])){
             $_SESSION['member-id'] = 8;

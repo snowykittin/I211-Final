@@ -90,12 +90,22 @@ class AccountModel
     public function search_accounts($terms){
         $terms = explode(" ", $terms); //explode multiple terms into an array
 
-        //select statement, and then search
-        $sql = "SELECT a.account_id, t.type_name, c.currency_symbol, a.value FROM account AS a LEFT JOIN acct_types AS t ON a.account_type = t.type_id LEFT JOIN currency AS c ON a.currency_type = c.currency_id WHERE (1";
-        foreach($terms as $term){
-            $sql.= " AND t.type_name LIKE '%" . $term . "%' OR a.account_id LIKE '%" . $term . "%'";
+        //check if signed in as admin
+        if($_SESSION['privilege'] === true){
+            //select statement, and then search
+            $sql = "SELECT a.account_id, t.type_name, c.currency_symbol, a.value FROM account AS a LEFT JOIN acct_types AS t ON a.account_type = t.type_id LEFT JOIN currency AS c ON a.currency_type = c.currency_id WHERE (1";
+            foreach($terms as $term){
+                $sql.= " AND t.type_name LIKE '%" . $term . "%' OR a.account_id LIKE '%" . $term . "%'";
+            }
+            $sql .= ")";
+        }else{
+            //select statement, and then search per user's id
+            $sql = "SELECT a.account_id, t.type_name, c.currency_symbol, a.value FROM account AS a LEFT JOIN acct_types AS t ON a.account_type = t.type_id LEFT JOIN currency AS c ON a.currency_type = c.currency_id WHERE (1";
+            foreach($terms as $term){
+                $sql.= " AND t.type_name LIKE '%" . $term . "%' OR a.account_id LIKE '%" . $term . "%'";
+            }
+            $sql .= ") AND a.account_id = " . $_SESSION['member-id'];
         }
-        $sql .= ")";
 
         $query = $this->dbConnection->query($sql);
         // the search failed, return false.
