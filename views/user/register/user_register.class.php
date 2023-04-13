@@ -11,42 +11,50 @@ class UserRegister extends UserIndexView
         parent::displayHeader("Signup");
         ?>
 
-        <!--        <div id="main-header">Signup</div>-->
+        <div class="title">
+            <h1>Register</h1>
+        </div>
 
         <!-- display the user information register in a form -->
-        <br><br><br><br>
-        <form action='<?= BASE_URL . "/user/add/" ?>' method="post">
-            <input type="hidden" name="id" value="<?= $id ?>">
-            <br><br>
-            <div id="menu-detail">
-                <table style="margin: auto">
-                    <tr class="detail-labels">
-                        <th>Username</th>
-                        <th>Password</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Email</th>
-                    </tr>
-                    <tr class="detail-info">
-                        <td><input name="username" type="text" size="50" placeholder="username"
-                                   onfocus="this.placeholder = ' '"></td>
-                        <td><input name="password" type="text" size="50" placeholder="password"
-                                   onfocus="this.placeholder = ' '"></td>
-                        <td><input name="firstname" type="text" size="50" placeholder="first name"
-                                   onfocus="this.placeholder = ' '"></td>
-                        <td><input name="lastname" type="text" size="50" placeholder="last name"
-                                   onfocus="this.placeholder = ' '"></td>
-                        <td><input name="email" type="email" size="50" placeholder="exampleaddress@iu.edu"
-                                   onfocus="this.placeholder = ' '"></td>
-                    </tr>
-                </table>
-            </div>
-            <div id="button-group">
-                <input class="edit-buttons" type="submit" name="action" value="Signup">
-                <input class="edit-buttons" type="button" value="Cancel"
-                       onclick='window.location.href = "<?= BASE_URL . "/user/login/" ?>"'>
-            </div>
+        <div class="register-form">
+            <form action='<?= BASE_URL . "/user/add/" ?>' method="post">
+
+
+                <label for="firstname">First Name:</label>
+                <input name="firstname" type="text" placeholder="first name"
+                       onfocus="this.placeholder = ' '">
+                <label for="lastname">Last Name:</label>
+                <input name="lastname" type="text" placeholder="last name"
+                       onfocus="this.placeholder = ' '">
+                <label for="email">Email:</label>
+                <input name="email" type="email" placeholder="exampleaddress@iu.edu"
+                       onfocus="this.placeholder = ' '">
+                <label for="password">Password:</label>
+                <input name="password" type="text" placeholder="password"
+                       onfocus="this.placeholder = ' '">
+                <label for="home_address">Address:</label>
+                <input name="home_address" type="text" placeholder="123 John St."
+                       onfocus="this.placeholder = ' '">
+                <label for="city">City:</label>
+                <input name="city" type="text" placeholder="Indianapolis"
+                       onfocus="this.placeholder = ' '">
+                <label for="state">State:</label>
+                <input name="state" type="text" maxlength="2" placeholder="IN"
+                       onfocus="this.placeholder = ' '">
+                <label for="zip">Zip Code:</label>
+                <input name="zip" type="number" step="1" placeholder="46202"
+                       onfocus="this.placeholder = ' '">
+                <label for="country">Country:</label>
+                <input name="country" type="text" placeholder="USA"
+                       onfocus="this.placeholder = ' '">
+
+                <div class="form-row">
+                    <input style="cursor:pointer;" type="submit" name="action" value="Register">
+                    <input style="cursor:pointer;" type="button" value="Cancel" onclick='window.location.href = "<?= BASE_URL ?>"'>
+                </div>
+        </div>
         </form>
+        </div>
         <?php
         //display page footer
         parent::displayFooter();

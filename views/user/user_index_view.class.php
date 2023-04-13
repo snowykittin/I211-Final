@@ -11,15 +11,20 @@ class UserIndexView extends IndexView
             //the media type
             var media = "users";
         </script>
-        <nav>
+        <div class="user-actions">
             <!--                    ADD NAVIGATION -->
-            <a href="<?= BASE_URL ?>/user/login" style="color:black;">LOGIN</a>
-            <a href="<?= BASE_URL ?>/user/register" style="color:black;">REGISTER</a>
-            <a href="<?= BASE_URL ?>/user/edit" style="color:black;">EDIT</a>
-            <a href="<?= BASE_URL ?>/user/delete" style="color:black;">DELETE</a>
+            <?php
+//                check if logged in
+            if(isset($_SESSION['member-id'])){
+                echo "<a href='" . BASE_URL . "/user/edit'>EDIT</a>
+                       <a href='". BASE_URL ."/user/delete'>DELETE</a>";
+            }else{
+                echo "<a href='" . BASE_URL . "/user/login'>LOGIN</a>
+            <a href='" . BASE_URL . "/user/register'>REGISTER</a>";
+            }
 
-
-        </nav>
+            ?>
+        </div>
 
         <?php
     }

@@ -366,3 +366,50 @@ footer{
     font-size: 18px;
     color: #FBFBF2;
 }
+/*user page styling*/
+.user-actions{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #164d35;
+}
+.user-actions a{
+    text-decoration: none;
+    padding: 20px;
+    font-size: 18px;
+    color: #FBFBF2;
+    font-family: 'Roboto', sans-serif;
+}
+/*register page styling*/
+.register-form form{
+    width: 60%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+.register-form form label{
+    font-size: 18px;
+}
+.register-form form input, .register-form form select{
+    border: 1px solid #164d35;
+    padding: 5px 10px;
+    margin-bottom: 16px;
+}
+.register-form .form-row{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 50px;
+}
+.register-form .form-row input{
+    width: 175px;
+    height: 50px;
+    font-family: 'Roboto', sans-serif;
+    background-color: #368a65;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    color: #FBFBF2;
+}
