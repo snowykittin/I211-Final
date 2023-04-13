@@ -44,11 +44,6 @@ class AccountSearch extends IndexView
 
                 ?>
             </table>
-
-<!--            ADMIN VIEW ONLY -->
-            <div class="actions">
-                <a href="<?= BASE_URL ?>/account/new_account"><button>New Account</button></a>
-            </div>
         </div>
 
     <?php

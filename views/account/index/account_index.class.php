@@ -2,7 +2,7 @@
 
 class AccountIndex extends IndexView
 {
-    public function display($accounts){
+    public function display($accounts, $make_account){
         parent::displayHeader("Infinibank - Account Summary");
         ?>
 
@@ -47,9 +47,16 @@ class AccountIndex extends IndexView
             </table>
 
 <!--            ADMIN VIEW ONLY -->
-            <div class="actions">
-                <a href="<?= BASE_URL ?>/account/new_account"><button>New Account</button></a>
-            </div>
+            <?php
+                if($make_account == "true"){
+                    echo "<div class='actions'>";
+                    echo  "<a href='". BASE_URL . "/account/new_account'><button>New Account</button></a>";
+                    echo "</div>";
+                }else{
+
+                }
+
+            ?>
         </div>
 
         <?php

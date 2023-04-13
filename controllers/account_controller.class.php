@@ -6,17 +6,35 @@ class AccountController
 
     public function __construct(){
         $this->account_model = AccountModel::getAccountModel();
+
+        //verify session has been started
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        //check the user's admin access and member-id
+        if(!isset($_SESSION['privilege'])){
+            $_SESSION['privilege'] = true;
+        }
+        if(!isset($_SESSION['member-id'])){
+            $_SESSION['member-id'] = 8;
+        }
     }
 
     //index will display all of a user's accounts
     public function index(){
+        //check to see if admin. if not, don't allow them to see new account button
+        if($_SESSION['privilege'] === true){
+            $make_account = "true";
+        }else{
+            $make_account = "false";
+        }
         $accounts = $this->account_model->list_accounts();
         if(!$accounts) {
             //show an error
             $message = "We're sorry, your accounts are not available.";
         }
         $view = new AccountIndex();
-        $view->display($accounts);
+        $view->display($accounts, $make_account);
     }
 
     //error function
