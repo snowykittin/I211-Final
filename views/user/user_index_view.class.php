@@ -11,11 +11,15 @@ class UserIndexView extends IndexView
             //the media type
             var media = "users";
         </script>
-        <form>
-            <label>Please log in or register to access the page:</label><br><br>
-            <a href="user_login.class.php">Log In</a><br><br>
-            <a href="register.php">Register</a><br><br>
-        </form>
+        <nav>
+            <!--                    ADD NAVIGATION -->
+            <a href="<?= BASE_URL ?>/user/login">LOGIN</a>
+            <a href="<?= BASE_URL ?>/user/register">REGISTER</a>
+            <a href="<?= BASE_URL ?>/user/edit">EDIT</a>
+            <a href="<?= BASE_URL ?>/user/delete">DELETE</a>
+
+
+        </nav>
 
         <?php
         echo "Please display SOMETHING";
