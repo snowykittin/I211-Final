@@ -13,7 +13,7 @@ class AccountController
         }
         //check the user's admin access and member-id
         if(!isset($_SESSION['privilege'])){
-            $_SESSION['privilege'] = false;
+            $_SESSION['privilege'] = true;
         }
         if(!isset($_SESSION['member-id'])){
             $_SESSION['member-id'] = 8;
@@ -153,9 +153,9 @@ class AccountController
         }
 
         $accounts = $this->account_model->list_accounts();
-        //show accounts page
+        $make_account = "true";
         $view = new AccountIndex();
-        $view->display($accounts);
+        $view->display($accounts, $make_account);
 
     }
 }

@@ -258,8 +258,11 @@ class AccountModel
 
         //query string for account creation
         $sql = "INSERT INTO account VALUES (NULL, '$member_no', '$account_type', ' $currency_type', '$deposit');";
+        $query = $this->dbConnection->query($sql);
 
-        return $this->dbConnection->query($sql);
+        if(!$query)
+            return false;
+        return true;
     }
     //make a transaction
     public function make_transaction(){
