@@ -16,8 +16,8 @@ class AccountTransaction extends IndexView
         </div>
         <div class="create-account-form">
             <form action="<?= BASE_URL ?>/account/transaction/<?= $account_id ?>" method="post">
-                <label for="account_id">Account Number:</label>
-                <input name="account_id" id="account_id" type="number" value="<?= $account_id ?>" required>
+                <h4>Account Number: <?= $account_id ?></h4>
+                <input name="account_id" id="account_id" type="hidden" value="<?= $account_id ?>">
 
                 <label for="transaction_type">Transaction Type:</label>
                 <select id="transaction_type" name="transaction_type" required>
