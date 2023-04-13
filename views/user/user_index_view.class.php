@@ -11,18 +11,22 @@ class UserIndexView extends IndexView
             //the media type
             var media = "users";
         </script>
-        <nav>
+        <div class="user-actions">
             <!--                    ADD NAVIGATION -->
-            <a href="<?= BASE_URL ?>/user/login">LOGIN</a>
-            <a href="<?= BASE_URL ?>/user/register">REGISTER</a>
-            <a href="<?= BASE_URL ?>/user/edit">EDIT</a>
-            <a href="<?= BASE_URL ?>/user/delete">DELETE</a>
+            <?php
+//                check if logged in
+            if(isset($_SESSION['member-id'])){
+                echo "<a href='" . BASE_URL . "/user/edit'>EDIT</a>
+                       <a href='". BASE_URL ."/user/delete'>DELETE</a>";
+            }else{
+                echo "<a href='" . BASE_URL . "/user/login'>LOGIN</a>
+            <a href='" . BASE_URL . "/user/register'>REGISTER</a>";
+            }
 
-
-        </nav>
+            ?>
+        </div>
 
         <?php
-        echo "Please display SOMETHING";
     }
 
     public static function displayFooter()
