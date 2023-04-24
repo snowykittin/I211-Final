@@ -26,10 +26,10 @@ class AccountDetail extends IndexView
                     <button class="tab-nav-item" onclick="openTab('Details')">Account Details</button>
                     </div>
                     <div class="tab-search">
-                        <form method="get" action="<?= BASE_URL ?>/account/search_transactions">
+                        <form id="transaction-search-form">
                             <input type="text" placeholder="Search transactions..." name="query-terms" id="transactionsearchbox" />
                             <input type="hidden" name="acct-id" value="<?= $account_id ?>" />
-                            <input type="submit" value="Search" />
+                            <button type="submit">Search</button>
                         </form>
                     </div>
                 </div>
@@ -86,7 +86,57 @@ class AccountDetail extends IndexView
             </div>
         </div>
 
-    <?php
+        <?php
         parent::displayFooter();
     }
 }
+?>
+<!-- Add this script tag inside your HTML head tag or before the closing body tag -->
+<script>
+    function openTab(tabName) {
+        const tabContainers = document.getElementsByClassName("tab-container");
+
+        for (let i = 0; i < tabContainers.length; i++) {
+            tabContainers[i].style.display = "none";
+        }
+
+        document.getElementById(tabName).style.display = "block";
+    }
+
+    function searchTransactions(event) {
+        event.preventDefault();
+
+        const queryTerms = document.getElementById('transactionsearchbox').value;
+        const accountId = document.getElementsByName('acct-id')[0].value;
+        const xhr = new XMLHttpRequest();
+
+        xhr.open('GET', `<?= BASE_URL ?>/account/search_transactions?query-terms=${queryTerms}&acct-id=${accountId}`, true);
+        xhr.onload = function() {
+            if (this.status == 200) {
+                const transactions = JSON.parse(this.responseText);
+                let output = '';
+
+                if (transactions.length === 0) {
+                    output = "<tr><td colspan='5'>No transactions found.</td></tr>";
+                } else {
+                    transactions.forEach(transaction => {
+                        output += `<tr>
+                        <td>${transaction.id}</td>
+                        <td>${transaction.date}</td>
+                        <td>${transaction.amount}</td>
+                        <td>${transaction.type}</td>
+                        <td>${transaction.description}</td>
+                    </tr>`;
+                    });
+                }
+
+                document.querySelector('#Transactions table').innerHTML = output;
+            }
+        };
+
+        xhr.send();
+    }
+
+    // Add this script to the end of your HTML file or inside a DOMContentLoaded event listener
+    document.getElementById('transaction-search-form').addEventListener('submit', searchTransactions);
+</script>

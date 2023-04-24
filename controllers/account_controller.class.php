@@ -180,4 +180,26 @@ class AccountController
         }
 
     }
+    public function search_transactions_ajax(){
+        //retrieve items from search, retrieve account id
+        $query_terms = trim($_GET['query-terms']);
+        $id = trim($_GET['acct-id']);
+
+        //if empty, simply go back to the accounts view
+        if($query_terms == "")
+            $this->details($id);
+
+        //search database for matching transactions
+        $transactions = $this->account_model->search_transactions($query_terms, $id);
+
+        if($transactions === false){
+            //handle error
+            $this->details($id);
+        }
+
+        //display transactions as JSON
+        $search = new TransactionSearch();
+        $search->displayJson($transactions);
+    }
+
 }

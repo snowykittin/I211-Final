@@ -26,7 +26,7 @@ class TransactionSearch extends IndexView
                         <button class="tab-nav-item" onclick="openTab('Details')">Account Details</button>
                     </div>
                     <div class="tab-search">
-                        <form method="get" action="<?= BASE_URL ?>/account/search_transactions">
+                        <form method="get" action="<?= BASE_URL ?>/account/search_transactions" onsubmit="sendSearchRequest('<?= BASE_URL ?>'); return false;">
                             <input type="text" placeholder="Search transactions..." name="query-terms" id="transactionsearchbox" />
                             <input type="hidden" name="acct-id" value="<?= $account_id ?>" />
                             <input type="submit" value="Search" />
@@ -86,8 +86,84 @@ class TransactionSearch extends IndexView
             </div>
         </div>
 
+        <script>
+            function sendSearchRequest(baseUrl) {
+                var searchBox = document.getElementById("transactionsearchbox");
+                var accountId = document.querySelector("input[name='acct-id']").value;
+                var searchQuery = searchBox.value;
+
+                if (searchQuery.trim() === "") {
+                    window.location.href = baseUrl + "/account/details/" + accountId;
+                    return;
+                }
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", baseUrl + "/account/search_transactions_ajax?query-terms=" + encodeURIComponent(searchQuery) + "&acct-id=" + encodeURIComponent(accountId), true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        var transactions = JSON.parse(xhr.responseText);
+                        displaySearchResults(transactions);
+                    }
+                };
+
+                xhr.send();
+            }
+            function openTab(tabName) {
+                var i, tabContent, tabLinks;
+
+                tabContent = document.getElementsByClassName("tab-container");
+                for (i = 0; i < tabContent.length; i++) {
+                    tabContent[i].style.display = "none";
+                }
+
+                tabLinks = document.getElementsByClassName("tab-nav-item");
+                for (i = 0; i < tabLinks.length; i++) {
+                    tabLinks[i].className = tabLinks[i].className.replace(" active", "");
+                }
+
+                document.getElementById(tabName).style.display = "block";
+                event.currentTarget.className += " active";
+            }
+
+            function displaySearchResults(transactions) {
+                var table = document.getElementById("Transactions").getElementsByTagName("table")[0];
+                var newRow, cell, i;
+
+                // Clear the table first
+                table.innerHTML = "<tr><th>ID</th><th>Date</th><th>Amount</th><th>Type</th><th>Description</th></tr>";
+
+                if (transactions.length === 0) {
+                    newRow = table.insertRow();
+                    cell = newRow.insertCell();
+                    cell.colSpan = 5;
+                    cell.innerHTML = "No transactions have been found.";
+                } else {
+                    for (i = 0; i < transactions.length; i++) {
+                        newRow = table.insertRow();
+
+                        cell = newRow.insertCell();
+                        cell.innerHTML = transactions[i].id;
+
+                        cell = newRow.insertCell();
+                        cell.innerHTML = transactions[i].transaction_date;
+
+                        cell = newRow.insertCell();
+                        cell.innerHTML = transactions[i].amount;
+
+                        cell = newRow.insertCell();
+                        cell.innerHTML = transactions[i].transaction_type;
+
+                        cell = newRow.insertCell();
+                        cell.innerHTML = transactions[i].description;
+                    }
+                }
+            }
+
+        </script>
+
         <?php
         parent::displayFooter();
     }
 }
-
