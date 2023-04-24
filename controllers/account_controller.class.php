@@ -29,13 +29,18 @@ class AccountController
         }else{
             $make_account = "false";
         }
-        $accounts = $this->account_model->list_accounts();
-        if(!$accounts) {
-            //show an error
-            $message = "We're sorry, your accounts are not available.";
+        try{
+            $accounts = $this->account_model->list_accounts();
+            if(!$accounts) {
+                //show an error
+                throw new PageloadException("We're sorry, this page cannot be loaded. If you do not have an account with Infinibank, please call a representative to sign up for an account.");
+            }
+            $view = new AccountIndex();
+            $view->display($accounts, $make_account);
+        }catch (PageloadException $e) {
+            $this->error($e->getMessage());
         }
-        $view = new AccountIndex();
-        $view->display($accounts, $make_account);
+
     }
 
     //error function
@@ -46,17 +51,22 @@ class AccountController
 
 //    //show a specific account's details
     public function details($id){
-        //retrieve specific account
-        $account = $this->account_model->view_account($id);
-        $transactions = $this->account_model->list_transactions($id);
+        try{
+            //retrieve specific account
+            $account = $this->account_model->view_account($id);
+            $transactions = $this->account_model->list_transactions($id);
 
-        if(!$account){
-            //display error
-            return "We're sorry, your account cannot be found.";
+            if(!$account){
+                //display error
+                throw new PageloadException("We're sorry, this page cannot be loaded. If you do not have an account with Infinibank, please call a representative to sign up for an account.");
+            }
+
+            $view = new AccountDetail();
+            $view->display($account, $transactions);
+        }catch (PageloadException $e) {
+            $this->error($e->getMessage());
         }
 
-        $view = new AccountDetail();
-        $view->display($account, $transactions);
     }
 
     // account search
@@ -135,28 +145,39 @@ class AccountController
 
     //create a new bank account page - visible to admin's only
     public function new_account(){
-        //get the currency types
-        $currencies = $this->account_model->list_currencies();
-        $types = $this->account_model->list_types();
+        try{
+            if(!$_SESSION['privilege']){
+                throw new UnauthorizedAccessException("You do not have access to view this page.");
+            }
 
-        $view = new AccountCreate();
-        $view->display($types, $currencies);
+            //get the currency types
+            $currencies = $this->account_model->list_currencies();
+            $types = $this->account_model->list_types();
+
+            $view = new AccountCreate();
+            $view->display($types, $currencies);
+        }catch (UnauthorizedAccessException $e){
+            $this->error($e->getMessage());
+        }
+
     }
     //run sql to create account, then take to account listing
     public function create(){
-        //create new account
-        $new_account = $this->account_model->create_account();
-        if (!$new_account) {
-            //display an error
-            $message = "There was a problem making your account.";
-            $this->error($message);
-            return;
-        }
+        try{
+            //create new account
+            $new_account = $this->account_model->create_account();
+            if (!$new_account) {
+                //display an error
+                throw new PageloadException("There was a problem in making your account.");
+            }
 
-        $accounts = $this->account_model->list_accounts();
-        $make_account = "true";
-        $view = new AccountIndex();
-        $view->display($accounts, $make_account);
+            $accounts = $this->account_model->list_accounts();
+            $make_account = "true";
+            $view = new AccountIndex();
+            $view->display($accounts, $make_account);
+        }catch (PageloadException $e){
+            $this->error($e->getMessage());
+        }
 
     }
 }

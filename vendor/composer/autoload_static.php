@@ -32,6 +32,7 @@ class ComposerStaticInit1ead6ce07a3836fe5762e9902a70ffd1
         'HomeIndex' => __DIR__ . '/../..' . '/views/home/home_index.class.php',
         'IndexView' => __DIR__ . '/../..' . '/views/index_view.class.php',
         'InsufficientFundsException' => __DIR__ . '/../..' . '/exceptions/insufficient_funds_exception.class.php',
+        'PageloadException' => __DIR__ . '/../..' . '/exceptions/pageload_exception.class.php',
         'Transaction' => __DIR__ . '/../..' . '/models/account/transaction.class.php',
         'TransactionSearch' => __DIR__ . '/../..' . '/views/account/search/transaction_search.class.php',
         'UnauthorizedAccessException' => __DIR__ . '/../..' . '/exceptions/unauthorized_access_exception.class.php',

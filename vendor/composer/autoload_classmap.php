@@ -31,6 +31,7 @@ return array(
     'HomeIndex' => $baseDir . '/views/home/home_index.class.php',
     'IndexView' => $baseDir . '/views/index_view.class.php',
     'InsufficientFundsException' => $baseDir . '/exceptions/insufficient_funds_exception.class.php',
+    'PageloadException' => $baseDir . '/exceptions/pageload_exception.class.php',
     'Transaction' => $baseDir . '/models/account/transaction.class.php',
     'TransactionSearch' => $baseDir . '/views/account/search/transaction_search.class.php',
     'UnauthorizedAccessException' => $baseDir . '/exceptions/unauthorized_access_exception.class.php',
