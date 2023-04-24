@@ -153,9 +153,9 @@ class AccountController
         }
 
         $accounts = $this->account_model->list_accounts();
-        //show accounts page
+        $make_account = "true";
         $view = new AccountIndex();
-        $view->display($accounts);
+        $view->display($accounts, $make_account);
 
     }
 }
