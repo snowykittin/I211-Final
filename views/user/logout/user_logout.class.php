@@ -23,7 +23,7 @@ class UserLogout extends UserIndexView
             $host = "localhost";
             $login = "phpuser";
             $password = "phpuser";
-            $database = "lewies";
+            $database = "infinibank_db";
 
             $conn = @ new mysqli($host, $login, $password, $database);
 
