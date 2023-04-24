@@ -314,6 +314,12 @@ footer{
     font-size: 14px;
     font-weight: normal;
 }
+#transactionSuggestionDiv{
+    position: relative;
+    z-index: 10;
+    display: none;
+    border: 2px solid grey;
+}
 /* details tab */
 .tab-container h2{
     padding: 20px;
@@ -372,6 +378,7 @@ footer{
     border-radius: 10px;
     font-size: 18px;
     color: #FBFBF2;
+    cursor: pointer;
 }
 /*user page styling*/
 .user-actions{

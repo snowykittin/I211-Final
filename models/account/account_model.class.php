@@ -208,7 +208,7 @@ class AccountModel
         //search query
         $sql = "SELECT * FROM transactions WHERE account_id=" . $id . " AND (1";
         foreach($terms as $term){
-            $sql .= " AND transaction_type LIKE '%" . $term . "%' OR description LIKE '%" . $term . "%' OR transaction_id LIKE '%" . $term . "%'";
+            $sql .= " AND transaction_type LIKE '%" . $term . "%' OR description LIKE '%" . $term . "%' OR transaction_date LIKE '%" . $term . "%' OR transaction_id LIKE '%" . $term . "%'";
         }
         $sql .= ")";
 

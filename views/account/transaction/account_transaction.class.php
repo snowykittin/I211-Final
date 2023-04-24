@@ -34,7 +34,7 @@ class AccountTransaction extends IndexView
 
                 <div class="form-row">
                     <input type="submit" name="submit" value="Make Transaction">
-                    <input type="button" value="Cancel" onclick='window.location.href = "<?= BASE_URL ?>/account/detail/<?= $account_id ?>"'>
+                    <input type="button" value="Cancel" onclick='window.location.href = "<?= BASE_URL ?>/account/details/<?= $account_id ?>"'>
                 </div>
             </form>
         </div>
