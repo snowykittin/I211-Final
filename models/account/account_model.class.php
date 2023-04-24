@@ -34,55 +34,79 @@ class AccountModel
 
     //list all of a user's accounts
     public function list_accounts(){
-        //check if admin. if so, list all accounts. if not, list only to user's id
-        if($_SESSION['privilege'] === true){
-            $sql = "SELECT a.account_id, t.type_name, c.currency_symbol, a.value FROM account AS a LEFT JOIN acct_types AS t ON a.account_type = t.type_id LEFT JOIN currency AS c ON a.currency_type = c.currency_id";
-        }else{
-            $sql = "SELECT a.account_id, t.type_name, c.currency_symbol, a.value FROM account AS a LEFT JOIN acct_types AS t ON a.account_type = t.type_id LEFT JOIN currency AS c ON a.currency_type = c.currency_id WHERE a.member_no=" . $_SESSION['member-id'];
-        }
-        //execute
-        $query = $this->dbConnection->query($sql);
+        try {
+            //check if admin. if so, list all accounts. if not, list only to user's id
+            if($_SESSION['privilege'] === true){
+                $sql = "SELECT a.account_id, t.type_name, c.currency_symbol, a.value FROM account AS a LEFT JOIN acct_types AS t ON a.account_type = t.type_id LEFT JOIN currency AS c ON a.currency_type = c.currency_id";
+            }else{
+                $sql = "SELECT a.account_id, t.type_name, c.currency_symbol, a.value FROM account AS a LEFT JOIN acct_types AS t ON a.account_type = t.type_id LEFT JOIN currency AS c ON a.currency_type = c.currency_id WHERE a.member_no=" . $_SESSION['member-id'];
+            }
+            //execute
+            $query = $this->dbConnection->query($sql);
 
-        // if the query failed, return false.
-        if (!$query)
+            //if the query succeeded, but no accounts found.
+            if ($query->num_rows == 0)
+                return 0;
+
+            // if the query failed, return false.
+            if (!$query) {
+                throw new DatabaseException("We're sorry, but we could not connect to the database. Please try again.");
+            }
+
+            $accounts = array();
+            //loop record sets
+            while ($obj = $query->fetch_object()){
+                $account = new Account(stripslashes($obj->type_name),stripslashes($obj->currency_name),stripslashes($obj->currency_symbol),stripslashes($obj->value));
+
+                $account->setId($obj->account_id);
+
+                $accounts[] = $account;
+            }
+
+            return $accounts;
+        } catch (DatabaseException $e) {
+            $view = new ErrorView();
+            $view->display($e->getMessage());
             return false;
-
-        //if the query succeeded, but no accounts found.
-        if ($query->num_rows == 0)
-            return 0;
-
-        $accounts = array();
-        //loop record sets
-        while ($obj = $query->fetch_object()){
-            $account = new Account(stripslashes($obj->type_name),stripslashes($obj->currency_name),stripslashes($obj->currency_symbol),stripslashes($obj->value));
-
-            $account->setId($obj->account_id);
-
-            $accounts[] = $account;
         }
 
-        return $accounts;
     }
 
     //view the details of a specific account page, matching the id
     public function view_account($id){
-        //query to obtain account information
-        $sql = "SELECT a.account_id, t.type_name, c.currency_name, c.currency_symbol, a.value FROM account AS a LEFT JOIN acct_types AS t ON a.account_type = t.type_id LEFT JOIN currency AS c ON a.currency_type = c.currency_id WHERE a.account_id = '$id' ";
+        try{
+            //query to obtain account information
+            $sql = "SELECT a.account_id, a.member_no, t.type_name, c.currency_name, c.currency_symbol, a.value FROM account AS a LEFT JOIN acct_types AS t ON a.account_type = t.type_id LEFT JOIN currency AS c ON a.currency_type = c.currency_id WHERE a.account_id = '$id' ";
 
-        $query = $this->dbConnection->query($sql);
+            $query = $this->dbConnection->query($sql);
 
-        if($query && $query->num_rows > 0){
-            $obj = $query->fetch_object();
+            if($query && $query->num_rows > 0){
+                $obj = $query->fetch_object();
 
-            //create an account object
-            $account = new Account(stripslashes($obj->type_name),stripslashes($obj->currency_name),stripslashes($obj->currency_symbol),stripslashes($obj->value));
+                if($obj->member_no != $_SESSION['member-id'] && !$_SESSION['privilege']){
+                    throw new UnauthorizedAccessException("You are not authorized to view this account.");
+                }
 
-            //set the id
-            $account->setId($obj->account_id);
+                //create an account object
+                $account = new Account(stripslashes($obj->type_name),stripslashes($obj->currency_name),stripslashes($obj->currency_symbol),stripslashes($obj->value));
 
-            return $account;
+                //set the id
+                $account->setId($obj->account_id);
+
+                return $account;
+            }
+            else{
+                throw new DatabaseException("We're sorry, but we could not connect to the database. Please try again.");
+            }
+        } catch (DatabaseException $e) {
+            $view = new ErrorView();
+            $view->display($e->getMessage());
+            return false;
+        } catch (UnauthorizedAccessException $e) {
+            $view = new ErrorView();
+            $view->display($e->getMessage());
+            return false;
         }
-        return false;
 
     }
 
@@ -107,28 +131,39 @@ class AccountModel
             $sql .= ") AND a.account_id = " . $_SESSION['member-id'];
         }
 
-        $query = $this->dbConnection->query($sql);
-        // the search failed, return false.
-        if (!$query)
+        try{
+            $query = $this->dbConnection->query($sql);
+
+            // the search failed, return false.
+            if (!$query)
+                throw new DatabaseException("We're sorry, but we could not connect to the database. Please try again.");
+
+            //search succeeded, but no account was found.
+            if ($query->num_rows == 0)
+                return 0;
+
+            //search succeeded and found at least one account
+            $accounts = array();
+
+            //loop record sets
+            while ($obj = $query->fetch_object()){
+                $account = new Account(stripslashes($obj->type_name),stripslashes($obj->currency_name),stripslashes($obj->currency_symbol),stripslashes($obj->value));
+
+                $account->setId($obj->account_id);
+
+                $accounts[] = $account;
+            }
+
+            return $accounts;
+
+        }catch (DatabaseException $e) {
+            $view = new ErrorView();
+            $view->display($e->getMessage());
             return false;
-
-        //search succeeded, but no account was found.
-        if ($query->num_rows == 0)
-            return 0;
-
-        //search succeeded and found at least one account
-        $accounts = array();
-
-        //loop record sets
-        while ($obj = $query->fetch_object()){
-            $account = new Account(stripslashes($obj->type_name),stripslashes($obj->currency_name),stripslashes($obj->currency_symbol),stripslashes($obj->value));
-
-            $account->setId($obj->account_id);
-
-            $accounts[] = $account;
         }
 
-        return $accounts;
+
+
     }
 
     //list all transactions related to a specific account
@@ -267,33 +302,47 @@ class AccountModel
     //make a transaction
     public function make_transaction(){
         //create new transaction, update balance
-        //check for post data
-        if(!filter_has_var(INPUT_POST,'account_id') || !filter_has_var(INPUT_POST,'transaction_type') || !filter_has_var(INPUT_POST,'amount')  || !filter_has_var(INPUT_POST,'current_balance') || !filter_has_var(INPUT_POST,'description'))
+        try{
+            //check for post data
+            if(!filter_has_var(INPUT_POST,'account_id') || !filter_has_var(INPUT_POST,'transaction_type') || !filter_has_var(INPUT_POST,'amount')  || !filter_has_var(INPUT_POST,'current_balance') || !filter_has_var(INPUT_POST,'description')){
+                throw new DataMissingException("Please try resubmitting the form, and fill out all required fields.");
+            }
+
+            //retrieve values, sanitize for security
+            $account_id = filter_input(INPUT_POST, 'account_id', FILTER_SANITIZE_NUMBER_INT);
+            $transaction_type = filter_input(INPUT_POST, 'transaction_type', FILTER_SANITIZE_STRING);
+            $amount = filter_input(INPUT_POST, 'amount', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+            $current_balance = filter_input(INPUT_POST, 'current_balance', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+            $description =  filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
+
+            //calculate and update new bank balance, make transaction
+            if($transaction_type == 'deposit'){
+                $new_balance = (float)$amount + (float)$current_balance;
+            }else{
+                $new_balance = (float)$current_balance - (float)$amount;
+            }
+            //UPDATE account SET value = '$new_balance' WHERE account_id = '$account_id';
+            $sql1 = "INSERT INTO transactions VALUES (NULL, '$account_id', DEFAULT, '$transaction_type', '$amount', '$description');";
+            $sql2 = "UPDATE account SET value = '$new_balance' WHERE account_id = '$account_id';";
+
+            $query = $this->dbConnection->query($sql1);
+            $query2 = $this->dbConnection->query($sql2);
+
+            if(!$query || !$query2)
+                throw new DatabaseException("There was an error making your transaction.");
+
+            return true;
+        } catch (DatabaseException $e) {
+            $view = new ErrorView();
+            $view->display($e->getMessage());
             return false;
-
-        //retrieve values, sanitize for security
-        $account_id = filter_input(INPUT_POST, 'account_id', FILTER_SANITIZE_NUMBER_INT);
-        $transaction_type = filter_input(INPUT_POST, 'transaction_type', FILTER_SANITIZE_STRING);
-        $amount = filter_input(INPUT_POST, 'amount', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-        $current_balance = filter_input(INPUT_POST, 'current_balance', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-        $description =  filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
-
-        //calculate and update new bank balance, make transaction
-        if($transaction_type == 'deposit'){
-            $new_balance = (float)$amount + (float)$current_balance;
-        }else{
-            $new_balance = (float)$current_balance - (float)$amount;
+        } catch (DataMissingException $e) {
+            $view = new ErrorView();
+            $view->display($e->getMessage());
+            return false;
         }
-        //UPDATE account SET value = '$new_balance' WHERE account_id = '$account_id';
-        $sql1 = "INSERT INTO transactions VALUES (NULL, '$account_id', DEFAULT, '$transaction_type', '$amount', '$description');";
-        $sql2 = "UPDATE account SET value = '$new_balance' WHERE account_id = '$account_id';";
 
-        $query = $this->dbConnection->query($sql1);
-        $query2 = $this->dbConnection->query($sql2);
 
-        if(!$query || !$query2)
-            return false;
 
-        return true;
     }
 }
