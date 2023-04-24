@@ -28,8 +28,16 @@ class IndexView
 <!--                    ADD NAVIGATION -->
                     <a href="<?= BASE_URL ?>/index.php">HOME</a>
                     <a href="<?= BASE_URL ?>/home/about">ABOUT</a>
-                    <a href="<?= BASE_URL ?>/user/register">MEMBERS</a>
-                    <a href="<?= BASE_URL ?>/account">ACCOUNTS</a>
+                    <?php
+                        //check if signed in to determine where the url goes
+                        if(isset($_SESSION['member-id'])){
+                            echo "<a href='". BASE_URL . "/account'>ACCOUNTS</a>";
+                            echo "<a href='". BASE_URL . "/user/register'>MY INFO</a>";
+                            echo "<a href='". BASE_URL . "/user/register'>SIGN OUT</a>";
+                        }else{
+                            echo "<a href='". BASE_URL . "/user/login'>MEMBERS AREA</a>";
+                        }
+                    ?>
                 </nav>
             </div>
         </div>

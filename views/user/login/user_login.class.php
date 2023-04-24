@@ -29,23 +29,21 @@ class UserLogin extends UserIndexView
     private function displayLoginForm()
     {
         ?>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 offset-md-3">
-                    <h2>Login</h2>
+        <div class="title">
+            <h1>Login</h1>
+        </div>
+        <div class="register-form">
                     <form action="<?= BASE_URL ?>/user/verify/" method="post">
-                        <div class="form-group">
                             <label for="username">Email:</label>
                             <input type="text" class="form-control" id="username" name="username" required>
-                        </div>
-                        <div class="form-group">
                             <label for="password">Password:</label>
                             <input type="password" class="form-control" id="password" name="password" required>
+
+                        <div class="form-row">
+                            <input style="cursor:pointer;" type="submit" name="action" value="Login">
+                            <input style="cursor:pointer;" type="button" value="Register" onclick='window.location.href = "<?= BASE_URL ?>/user/register"'>
                         </div>
-                        <button type="submit" class="btn btn-primary">Login</button>
                     </form>
-                </div>
-            </div>
         </div>
         <?php
     }
