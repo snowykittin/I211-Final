@@ -141,12 +141,12 @@ class UserModel
 
 
         // retrieve the username and password
-        $username = trim(filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING));
+        $email = trim(filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING));
         $password = trim(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING));
 
         try {
-            if ($username == "" || $password == "") {
-                throw new DataMissingException("Please enter a username or password");
+            if ($email == "" || $password == "") {
+                throw new DataMissingException("Please enter an email or password");
             }
         } catch (DataMissingException $e) {
             $view = new UserController();
@@ -156,7 +156,7 @@ class UserModel
 
 
         //sql statement to filter the users table data with a username
-        $sql = "SELECT password FROM " . $this->db->getMembersTable() . " WHERE username='$username'";
+        $sql = "SELECT password FROM " . $this->db->getMembersTable() . " WHERE email='$email'";
 
         //execute the query
         $query = $this->dbConnection->query($sql);
@@ -167,9 +167,9 @@ class UserModel
 
                 $hash = $result_row['password'];
                 if (password_verify($password, $hash)) {
-                    setcookie("username", $username, time() + 60, "/");
+                    setcookie("email", $email, time() + 60, "/");
                     try {
-                        $sql = "SELECT * FROM " . $this->db->getMembersTable() . " WHERE username='$username'";
+                        $sql = "SELECT * FROM " . $this->db->getMembersTable() . " WHERE email='$email'";
                         $query = $this->dbConnection->query($sql);
                         if (!$query) {
                             throw new UserIssueException("The Sql or Query failed.");
@@ -180,13 +180,13 @@ class UserModel
                         return false;
                     }
                     $result_row = $query->fetch_assoc();
-                    $user_id = $result_row['id'];
+                    $member_id = $result_row['id'];
                     $user_detail = $result_row['username'];
                     $user_role = $result_row['role'];
                     $user_email = $result_row['email'];
 
                     //Session variable that holds the user id
-                    $_SESSION['user_id'] = $user_id;
+                    $_SESSION['member_id'] = $member_id;
 
                     // display the users first and last name as their login information.
                     $_SESSION['login_status'] = 1;
