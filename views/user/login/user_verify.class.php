@@ -16,8 +16,8 @@ class UserVerify extends UserIndexView
         $login_status = 2;
 
         //obtain user id session variable
-        if (isset($_SESSION['user_id'])) {
-            $id = $_SESSION['user_id'];
+        if (isset($_SESSION['member_id'])) {
+            $id = $_SESSION['member_id'];
         }
 
         ?>
@@ -32,13 +32,13 @@ class UserVerify extends UserIndexView
             echo '<strong>' . $message . '</strong><br>';
             ?>
             <div id="button-group">
-                <input class="edit-buttons" type="button" value="Menu"
-                       onclick='window.location.href = "<?= BASE_URL . "/menu/index/" ?>"'>
+                <input class="edit-buttons" type="button" value="Home"
+                       onclick='window.location.href = "<?= BASE_URL . "/views/index/" ?>"'>
 
                 <input class="edit-buttons" type="button" value="Home"
                        onclick='window.location.href = "<?= BASE_URL ?>"'>
 
-                <input class="edit-buttons" type="button" value="Account"
+                <input class="edit-buttons" type="button" value="Members"
                        onclick="window.location.href = '<?= BASE_URL ?>/user/detail/<?= $id ?>'">
 
             </div>

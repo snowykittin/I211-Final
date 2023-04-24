@@ -137,20 +137,6 @@ class UserController
         $error->display($message);
     }
 
-    // delete display
-    public function deleteDisplay($id)
-    {
-        $user = $this->user_model->view_user($id);
-
-        // error handle
-        if (!$user) {
-            return false;
-        }
-        $error = new UserDelete();
-        $error->display($user);
-
-    }
-
     //deletes the user
     public function delete()
     {
@@ -163,22 +149,6 @@ class UserController
         $detail = new UserVerify();
         $detail->display("The User has been removed from the database");
         return true;
-    }
-
-    public function guest(){
-        $view = new GuestUser();
-        $view->display();
-    }
-
-    //handle calling inaccessible methods
-    public function __call($name, $arguments)
-    {
-        //$message = "Route does not exist.";
-        // Note: value of $name is case sensitive.
-        $message = "Calling method '$name' caused errors. Route does not exist.";
-
-        $this->error($message);
-        return;
     }
 
 
