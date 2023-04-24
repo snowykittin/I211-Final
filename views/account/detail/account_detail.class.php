@@ -27,10 +27,11 @@ class AccountDetail extends IndexView
                     </div>
                     <div class="tab-search">
                         <form method="get" action="<?= BASE_URL ?>/account/search_transactions">
-                            <input type="text" placeholder="Search transactions..." name="query-terms" id="transactionsearchbox" />
+                            <input type="text" placeholder="Search transactions..." name="query-terms" id="transactionsearchbox" onkeyup="transactionsKeyUp(event, <?= $account_id ?>)" />
                             <input type="hidden" name="acct-id" value="<?= $account_id ?>" />
                             <input type="submit" value="Search" />
                         </form>
+                        <div id="transactionSuggestionDiv"></div>
                     </div>
                 </div>
 

@@ -97,22 +97,31 @@ class AccountController
         $id = trim($_GET['acct-id']);
 
         //if empty, simply go back to the accounts view
-        if($query_terms == "")
+        if($query_terms == ""){
             $this->details($id);
+            exit();
+
+        }
 
         //retrieve account details
         $account = $this->account_model->view_account($id);
         //search database for matching transactions
-        $transactions = $this->account_model->search_transactions($query_terms, $id);
 
-        if($transactions === false){
-            //handle error
-            $this->details($id);
+        try{
+            $transactions = $this->account_model->search_transactions($query_terms, $id);
+
+            if($transactions === false){
+                throw new PageloadException("We're sorry, your transactions could not be obtained. Please try again.");
+            }
+
+            //display transactions
+            $search = new TransactionSearch();
+            $search->display($account, $transactions);
+        }catch (PageloadException $e){
+            $this->error($e->getMessage());
+
         }
 
-        //display transactions
-        $search = new TransactionSearch();
-        $search->display($account, $transactions);
 
     }
 
@@ -179,5 +188,22 @@ class AccountController
             $this->error($e->getMessage());
         }
 
+    }
+
+    //ajax suggestion
+    public function suggest_transactions(){
+        //retrieve query terms
+        $query_terms = trim($_GET['terms']);
+        $id = trim($_GET['id']);
+        $transactions = $this->account_model->search_transactions($query_terms, $id);
+
+        $descriptions = array();
+        if ($transactions){
+            foreach ($transactions as $transaction){
+                $descriptions[] = $transaction->getDescription();
+            }
+        }
+
+        echo json_encode($descriptions);
     }
 }
