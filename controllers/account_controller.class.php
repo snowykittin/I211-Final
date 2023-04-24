@@ -11,6 +11,7 @@ class AccountController
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
+
         //check the user's admin access and member-id
         if(!isset($_SESSION['privilege'])){
             $_SESSION['privilege'] = true;
