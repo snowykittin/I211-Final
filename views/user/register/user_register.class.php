@@ -1,14 +1,14 @@
 <?php
 
 
-class UserRegister extends UserIndexView
+class UserRegister extends IndexView
 {
 
     //put your code here
     public function display()
     {
         //display page header
-        parent::displayHeader("Signup");
+        parent::displayHeader("Register - Infinibank");
         ?>
 
         <div class="title">
@@ -37,16 +37,18 @@ class UserRegister extends UserIndexView
                        onfocus="this.placeholder = ' '">
                 <label for="city">City:</label>
                 <input name="city" type="text" placeholder="Indianapolis"
-                       onfocus="this.placeholder = ' '">
+                       onfocus="this.placeholder = ' '" id="cityInputBox" onkeyup="registerCityKeyUp(event)">
+                <div id="citySuggestionBox"></div>
+
                 <label for="state">State:</label>
-                <input name="state" type="text" maxlength="2" placeholder="IN"
-                       onfocus="this.placeholder = ' '">
+                <input name="state" type="text" placeholder="IN"
+                       onfocus="this.placeholder = ' '" id="stateInputBox">
                 <label for="zip">Zip Code:</label>
                 <input name="zip" type="number" step="1" placeholder="46202"
                        onfocus="this.placeholder = ' '">
                 <label for="country">Country:</label>
                 <input name="country" type="text" placeholder="USA"
-                       onfocus="this.placeholder = ' '">
+                       onfocus="this.placeholder = ' '" id="countryInputBox">
 
                 <div class="form-row">
                     <input style="cursor:pointer;" type="submit" name="action" value="Register">

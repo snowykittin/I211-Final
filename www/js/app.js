@@ -40,7 +40,8 @@ window.onload = function () {
 
     transactionSuggestionDiv = document.getElementById('transactionSuggestionDiv');
     transactionSearchBox = document.getElementById('transactionsearchbox');
-    transactionSuggestionDiv.style.display = 'none';
+    cityInputBox = document.getElementById('cityInputBox');
+    citiesSuggestionDiv = document.getElementById('citySuggestionBox');
 };
 
 //autosuggest transaction descriptions
@@ -115,6 +116,7 @@ function clickDescription(description) {
 REGISTER PAGE AJAX
  */
 
+
 var citiesSuggestionDiv, cityInputBox;
 
 //function for autosuggest on the register page
@@ -131,6 +133,8 @@ function suggest_city(query){
     //if the search term is empty, clear the suggestion box.
     if (query === "") {
         citiesSuggestionDiv.innerHTML = "";
+        citiesSuggestionDiv.style.display = 'none';
+        cityInputBox.style.marginBottom = '12px';
         return;
     }
 
@@ -170,6 +174,7 @@ function displayCities(cities){
         divContent += "<p id=s_" + i + " onclick='clickCity(this)'>" + cities[i] + "</p>";
         //display the spans in the div block
         citiesSuggestionDiv.innerHTML = divContent;
+        cityInputBox.style.marginBottom = '0px';
         citiesSuggestionDiv.style.display = 'block';
         citiesSuggestionDiv.style.backgroundColor = 'white';
     }
@@ -181,4 +186,5 @@ function clickCity(city) {
 
     //hide all suggestions
     citiesSuggestionDiv.style.display = 'none';
+    cityInputBox.style.marginBottom = '12px';
 }

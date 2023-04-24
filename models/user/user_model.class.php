@@ -26,6 +26,39 @@ class UserModel
         return self::$_instance;
     }
 
+    //autosuggest cities
+    public function search_cities($term){
+
+        //search query
+        $sql = "SELECT * FROM countries WHERE city_ascii LIKE '%" . $term . "%' LIMIT 6";
+
+        try{
+            $query = $this->dbConnection->query($sql);
+
+            if (!$query)
+                throw new DatabaseException("We're having trouble connecting to the database right now. Please try again.");
+
+            //search succeeded, but no transactions were found.
+            if ($query->num_rows == 0)
+                return 0;
+
+            //successfully found at least one city
+            $locations = array();
+
+            while ($obj = $query->fetch_object()){
+                $location = new Location(stripslashes($obj->city_ascii),stripslashes($obj->country),stripslashes($obj->admin_name));
+
+                $locations[] = $location;
+            }
+
+            return $locations;
+        }catch (DatabaseException $e) {
+            $view = new ErrorView();
+            $view->display($e->getMessage());
+            return false;
+        }
+    }
+
     // list users
     public function list_user()
     {
@@ -320,77 +353,4 @@ class UserModel
         return true;
     }
 
-    // this is basically useless
-    public function get_user_id()
-    {
-
-    }
-
-    public function delete_user()
-    {
-        $deleter = filter_input(INPUT_POST, 'confirm');
-
-        try {
-            if ($deleter == 'YES') {
-                echo "It is reading the confirmation message";
-
-                if (session_status() == PHP_SESSION_NONE) {
-                    session_start();
-                }
-                if (isset($_SESSION['user_id'])) {
-                    $Adminid = $_SESSION['user_id'];
-                    $id = $Adminid;
-
-                    // begin the delete process
-                    $sql = " DELETE FROM " . $this->tblUsers . " WHERE id='$id'";
-                    $query = $this->dbConnection->query($sql);
-                    if (isset($_SESSION['role'])) {
-                        $LOGGEDROLE = $_SESSION['role'];
-                    }
-
-                    try {
-
-                        if (!$query) {
-                            throw new DatabaseException("Failed to Execute the SQL");
-                        } else {
-                            return $query;
-                        }
-                    } catch (DatabaseException $e) {
-                        $view = new UserController();
-                        $view->error($e->getMessage());
-                        return false;
-                    }
-                }
-            } else {
-                if (session_status() == PHP_SESSION_NONE) {
-                    session_start();
-                }
-                if (isset($_SESSION['user_id'])) {
-                    $Adminid = $_SESSION['user_id'];
-                } else {
-                    $Adminid = NULL;
-                }
-                try {
-                    if ($Adminid === NULL) {
-                        throw new ViewingErrorException("<p><strong>" . "WARNING WARNING WARNING" . "<br><br>" . "YOU ARE NOT THIS USER" . "<br><br>" . "PLEASE CONTACT SERVER ADMIN IF PROBLEM CONTINUES" . "</strong></p>");
-                    } else {
-                        throw new UserIssueException("Typo in the word YES." . "<br><br>" . "MAKE SURE IT IS IN ALL CAPS");
-                    }
-                } catch (ViewingErrorException $e) {
-                    $view = new UserController();
-                    $view->manierror($e->getMessage());
-                    return false;
-                } catch (UserIssueException $e) {
-                    $view = new UserController();
-                    $view->error($e->getMessage());
-                    return false;
-                }
-            }
-        } catch (ViewingErrorException $e) {
-            $view = new UserController();
-            $view->manierror($e->getMessage());
-            return false;
-        }
-        return true;
-    }
 }

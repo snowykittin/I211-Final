@@ -27,6 +27,22 @@ class UserController
         return true;
     }
 
+    //register page autosuggest
+    public function suggest_cities($query){
+        //retrieve query terms
+        $query_terms = urldecode(trim($query));
+        $locations = $this->user_model->search_cities($query_terms);
+
+        $cities = array();
+        if($locations){
+            foreach ($locations as $location){
+                $cities[] = $location->getCity();
+            }
+        }
+
+        echo json_encode($cities);
+    }
+
     public function addDisplay()
     {
         // create an object
@@ -111,45 +127,21 @@ class UserController
     // logout
     public function logout()
     {
-        $logout = new UserLogout();
-        $logout->display();
-    }
+        $_SESSION['privilege'] = NULL;
+        $_SESSION['member-id'] = NULL;
+        setcookie("privilege", false);
+        setcookie("member-id", false);
 
-    //verify
-    public function verify()
-    {
-        //echo "called";
-        $verify = $this->user_model->verify_user();
-        if (!$verify) {
-            return false;
-        }
-        $view = new UserVerify($verify);
-        $view->display($verify);
-        return true;
+        header('Location: ../index.php');
     }
 
     //handle an error
     public function error($message)
     {
         //create an object of the Error class
-        $error = new UserError();
+        $error = new ErrorView();
         //display the error page
         $error->display($message);
     }
-
-    //deletes the user
-    public function delete()
-    {
-        $user = $this->user_model->delete_user();
-
-        // error handle
-        if (!$user) {
-            return false;
-        }
-        $detail = new UserVerify();
-        $detail->display("The User has been removed from the database");
-        return true;
-    }
-
 
 }

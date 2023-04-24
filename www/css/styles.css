@@ -427,3 +427,10 @@ footer{
     font-size: 18px;
     color: #FBFBF2;
 }
+#citySuggestionBox{
+    display: none;
+    position: relative;
+    padding: 10px;
+    border: 2px solid grey;
+    margin-bottom: 12px;
+}

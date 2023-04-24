@@ -33,7 +33,7 @@ class IndexView
                         if(isset($_SESSION['member-id'])){
                             echo "<a href='". BASE_URL . "/account'>ACCOUNTS</a>";
                             echo "<a href='". BASE_URL . "/user/register'>MY INFO</a>";
-                            echo "<a href='". BASE_URL . "/user/register'>SIGN OUT</a>";
+                            echo "<a href='". BASE_URL . "/user/logout'>SIGN OUT</a>";
                         }else{
                             echo "<a href='". BASE_URL . "/user/login'>MEMBERS AREA</a>";
                         }
