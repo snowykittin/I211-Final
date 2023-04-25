@@ -68,7 +68,7 @@ class UserModel
         //retrieve user inputs from the registration form
         $firstname = filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_STRING);
         $lastname = filter_input(INPUT_POST, "lastname", FILTER_SANITIZE_STRING);
-        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
+        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
         $password = trim(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING));
         $home_address = filter_input(INPUT_POST, "home_address", FILTER_SANITIZE_STRING);
         $city = filter_input(INPUT_POST, "city", FILTER_SANITIZE_STRING);
@@ -138,7 +138,7 @@ class UserModel
         //retrieve user inputs from the registration form
         $firstname = filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_STRING);
         $lastname = filter_input(INPUT_POST, "lastname", FILTER_SANITIZE_STRING);
-        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
+        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
         $password = trim(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING));
         $home_address = filter_input(INPUT_POST, "home_address", FILTER_SANITIZE_STRING);
         $city = filter_input(INPUT_POST, "city", FILTER_SANITIZE_STRING);
