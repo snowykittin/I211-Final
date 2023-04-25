@@ -106,7 +106,7 @@ class UserController
             $_SESSION['member-id'] = 8;
             $_SESSION['privilege'] = true;
 
-            // Redirect to the user detail page
+            // Redirect to the user to the detail page
             header('Location: ' . BASE_URL . '/user/detail');
         } else {
             // Handle the failed login attempt

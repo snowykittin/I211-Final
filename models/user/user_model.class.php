@@ -209,6 +209,7 @@ class UserModel
         }
         return true;
     }
+    //verify user
     public function verify_user($email, $password)
     {
         $email = $this->dbConnection->real_escape_string(trim($email));
