@@ -17,7 +17,7 @@ class AccountController
             $_SESSION['privilege'] = true;
         }
         if(!isset($_SESSION['member-id'])){
-            $_SESSION['member-id'] = 8;
+            $_SESSION['member-id'] = 11;
         }
     }
 

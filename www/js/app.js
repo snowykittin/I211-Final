@@ -8,6 +8,12 @@ function openTab(tabName) {
     document.getElementById(tabName).style.display = "block";
 }
 
+/*
+
+AJAX
+
+ */
+
 //transaction search AJAX
 var xmlHttp;  //xmlhttprequest object
 var base_url = "http://localhost:8080/I211-Final";
@@ -34,7 +40,8 @@ window.onload = function () {
 
     transactionSuggestionDiv = document.getElementById('transactionSuggestionDiv');
     transactionSearchBox = document.getElementById('transactionsearchbox');
-    transactionSuggestionDiv.style.display = 'none';
+    cityInputBox = document.getElementById('cityInputBox');
+    citiesSuggestionDiv = document.getElementById('citySuggestionBox');
 };
 
 //autosuggest transaction descriptions
@@ -57,7 +64,7 @@ function suggest_transactions(query, id){
             var descriptions = JSON.parse(xmlHttp.responseText);
 
             // display suggested titles in a div block
-            console.log(descriptions);
+            // console.log(descriptions);
             displayDescriptions(descriptions);
         }
     };
@@ -76,7 +83,7 @@ function displayDescriptions(description){
         return false;
     }
 
-    var divContent = ""
+    var divContent = "";
     //retrieve contents and create new span for each
     for (let i = 0; i < description.length; i++) {
         divContent += "<p id=s_" + i + " onclick='clickDescription(this)'>" + description[i] + "</p>";
@@ -108,6 +115,8 @@ function clickDescription(description) {
 /*
 REGISTER PAGE AJAX
  */
+
+
 var citiesSuggestionDiv, cityInputBox;
 
 //function for autosuggest on the register page
@@ -124,6 +133,8 @@ function suggest_city(query){
     //if the search term is empty, clear the suggestion box.
     if (query === "") {
         citiesSuggestionDiv.innerHTML = "";
+        citiesSuggestionDiv.style.display = 'none';
+        cityInputBox.style.marginBottom = '12px';
         return;
     }
 
@@ -163,6 +174,7 @@ function displayCities(cities){
         divContent += "<p id=s_" + i + " onclick='clickCity(this)'>" + cities[i] + "</p>";
         //display the spans in the div block
         citiesSuggestionDiv.innerHTML = divContent;
+        cityInputBox.style.marginBottom = '0px';
         citiesSuggestionDiv.style.display = 'block';
         citiesSuggestionDiv.style.backgroundColor = 'white';
     }
@@ -174,4 +186,5 @@ function clickCity(city) {
 
     //hide all suggestions
     citiesSuggestionDiv.style.display = 'none';
+    cityInputBox.style.marginBottom = '12px';
 }
