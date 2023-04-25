@@ -39,7 +39,7 @@ return array(
     'UnauthorizedAccessException' => $baseDir . '/exceptions/unauthorized_access_exception.class.php',
     'User' => $baseDir . '/models/user/user.class.php',
     'UserController' => $baseDir . '/controllers/user_controller.class.php',
-    'UserDetail' => $baseDir . '/views/user/detail/user_detail.class.php',
+    'UserDetailView' => $baseDir . '/views/user/detail/user_detail.class.php',
     'UserEdit' => $baseDir . '/views/user/edit/user_edit.class.php',
     'UserLogin' => $baseDir . '/views/user/login/user_login.class.php',
     'UserModel' => $baseDir . '/models/user/user_model.class.php',

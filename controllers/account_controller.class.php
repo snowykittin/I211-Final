@@ -11,14 +11,14 @@ class AccountController
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
-//
-//        //check the user's admin access and member-id
-//        if(!isset($_SESSION['privilege'])){
-//            $_SESSION['privilege'] = true;
-//        }
-//        if(!isset($_SESSION['member-id'])){
-//            $_SESSION['member-id'] = 8;
-//        }
+
+        //check the user's admin access and member-id
+        if(!isset($_SESSION['privilege'])){
+            $_SESSION['privilege'] = true;
+        }
+        if(!isset($_SESSION['member-id'])){
+            $_SESSION['member-id'] = 11;
+        }
     }
 
     //index will display all of a user's accounts

@@ -16,21 +16,28 @@ class UserController
         }
     }
 
-
     //show details of a user
-    public function detail($id)
+    public function detail()
     {
-        //retrieve the specific user
-        $user = $this->user_model->view_user($id);
-        //  $reviews = $this->review_model->list_review($id);
+        //don't let them see this if they ain't signed in
+        try{
+            if(!isset($_SESSION['member-id'])){
+                throw new UnauthorizedAccessException("You must sign in to view this page.");
+            }
 
-        if (!$user) {
-            return false;
+            $user = $this->user_model->view_user();
+            if(!$user){
+                throw new PageloadException("Couldn't load user data.");
+            }
+
+            //display user details
+            $view = new UserDetailView();
+            $view->display($user);
+        }catch (UnauthorizedAccessException $e){
+            $this->error($e->getMessage());
+        }catch (PageloadException $e){
+            $this->error($e->getMessage());
         }
-
-        //display user details
-        $view = new UserDetail();
-        $view->display($id, $user);
     }
 
     // edit a users information

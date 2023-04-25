@@ -5,89 +5,148 @@ class User
 {
 
     //private data members
-    private $id, $username, $password, $firstname, $lastname, $email, $role;
+    private $id, $firstname, $lastname, $email_address, $password, $home_address, $state, $city, $country, $zip, $role;
 
-    //the constructor
-    public function __construct($id, $username, $password, $firstname, $lastname, $email, $role)
-    {
-        $this->id = $id;
-        $this->username = $username;
-        $this->password = $password;
+    //constructor
+    public function __construct($firstname, $lastname, $email_address, $password, $home_address, $city, $state, $zip, $country, $role){
         $this->firstname = $firstname;
         $this->lastname = $lastname;
-        $this->email = $email;
+        $this->email_address = $email_address;
+        $this->password = $password;
+        $this->home_address = $home_address;
+        $this->city = $city;
+        $this->state = $state;
+        $this->zip = $zip;
+        $this->country = $country;
         $this->role = $role;
     }
 
-    //getters
-    function getId()
+
+    public function getId()
     {
         return $this->id;
     }
 
-    function getUsername()
-    {
-        return $this->username;
-    }
 
-    function getPassword()
-    {
-        return $this->password;
-    }
-
-    function getFirstname()
-    {
-        return $this->firstname;
-    }
-
-    function getLastname()
-    {
-        return $this->lastname;
-    }
-
-    function getEmail()
-    {
-        return $this->email;
-    }
-
-    function getRole()
-    {
-        return $this->role;
-    }
-
-    //setters
-    function setId($id)
+    public function setId($id)
     {
         $this->id = $id;
     }
 
-    function setUsername($username)
+
+    public function getFirstname()
     {
-        $this->username = $username;
+        return $this->firstname;
     }
 
-    function setPassword($password)
-    {
-        $this->password = $password;
-    }
 
-    function setFirstname($firstname)
+    public function setFirstname($firstname)
     {
         $this->firstname = $firstname;
     }
 
-    function setLastname($lastname)
+
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+
+
+    public function setLastname($lastname)
     {
         $this->lastname = $lastname;
     }
 
-    function setEmail($email)
+
+    public function getEmail()
     {
-        $this->email = $email;
+        return $this->email_address;
     }
 
-    function setRole($role)
+
+    public function setEmail($email)
+    {
+        $this->email_address = $email;
+    }
+
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+
+    public function getHomeAddress()
+    {
+        return $this->home_address;
+    }
+
+
+    public function setHomeAddress($home_address)
+    {
+        $this->home_address = $home_address;
+    }
+
+
+    public function getState()
+    {
+        return $this->state;
+    }
+
+
+    public function setState($state)
+    {
+        $this->state = $state;
+    }
+
+
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+
+    public function setCity($city)
+    {
+        $this->city = $city;
+    }
+
+    public function getZip(){
+        return $this->zip;
+    }
+
+    public function setZip($zip){
+        $this->zip = $zip;
+    }
+
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+
+    public function setCountry($country)
+    {
+        $this->country = $country;
+    }
+
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    public function setRole($role)
     {
         $this->role = $role;
     }
+
+
+
+
 }

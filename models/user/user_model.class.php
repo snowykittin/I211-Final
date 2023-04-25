@@ -59,46 +59,6 @@ class UserModel
         }
     }
 
-    // list users
-    public function list_user()
-    {
-        try {
-            $sql = "SELECT * FROM $this->tblUsers";
-
-            $query = $this->dbConnection->query($sql);
-
-            // if the query failed, return false.
-            if (!$query) {
-                throw new DatabaseException("Error listing all users, check the sql or query statments.");
-            }
-        } catch (DatabaseException $e) {
-            $view = new UserController();
-            $view->error($e->getMessage());
-            return false;
-        }
-        //if the query succeeded, but no user was found.
-        if ($query->num_rows == 0)
-            //echo 'no rows';
-            return 0;
-
-        //handle the result
-        //create an array to store all users
-        $users = array();
-
-        //loop through all rows in the returned recordsets
-        while ($obj = $query->fetch_object()) {
-            //echo stripslashes($obj->title);
-            //echo $query->num_rows;
-            $user = new User (stripslashes($obj->id), stripslashes($obj->username), stripslashes($obj->password), stripslashes($obj->firstname), stripslashes($obj->lastname), stripslashes($obj->email), stripcslashes($obj->role));
-            //echo $obj->id;
-            //set the id for the user
-            $user->setId($obj->id);
-
-            //add the users into the array
-            $users[] = $user;
-        }
-        return $users;
-    }
 
     public function add_user(){
         //retrieve user inputs from the registration form
@@ -162,114 +122,13 @@ class UserModel
         }
     }
 
-    public function verify_user()
-    {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-        // setting login status
-        $_SESSION['login_status'] = 2;
 
 
-        // retrieve the username and password
-        $email = trim(filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING));
-        $password = trim(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING));
-
-        try {
-            if ($email == "" || $password == "") {
-                throw new DataMissingException("Please enter an email or password");
-            }
-        } catch (DataMissingException $e) {
-            $view = new UserController();
-            $view->error($e->getMessage());
-            return false;
-        }
-
-
-        //sql statement to filter the users table data with a username
-        $sql = "SELECT password FROM " . $this->db->getMembersTable() . " WHERE email='$email'";
-
-        //execute the query
-        $query = $this->dbConnection->query($sql);
-        try {
-            //verify password; if password is valid, set a temporary cookie
-            if ($query and $query->num_rows > 0) {
-                $result_row = $query->fetch_assoc();
-
-                $hash = $result_row['password'];
-                if (password_verify($password, $hash)) {
-                    setcookie("email", $email, time() + 60, "/");
-                    try {
-                        $sql = "SELECT * FROM " . $this->db->getMembersTable() . " WHERE email='$email'";
-                        $query = $this->dbConnection->query($sql);
-                        if (!$query) {
-                            throw new UserIssueException("The Sql or Query failed.");
-                        }
-                    } catch (UserIssueException $e) {
-                        $view = new UserController();
-                        $view->error($e->getMessage());
-                        return false;
-                    }
-                    $result_row = $query->fetch_assoc();
-                    $member_id = $result_row['id'];
-                    $user_detail = $result_row['username'];
-                    $user_role = $result_row['role'];
-                    $user_email = $result_row['email'];
-
-                    //Session variable that holds the user id
-                    $_SESSION['member_id'] = $member_id;
-
-                    // display the users first and last name as their login information.
-                    $_SESSION['login_status'] = 1;
-
-                    // session var to store logged in username
-                    $_SESSION['name'] = $user_detail;
-
-                    // obtain the user role, store it in a session variable
-                    $_SESSION['role'] = $user_role;
-
-                    // store the email for the checkout page
-                    $_SESSION['user_email'] = $user_email;
-
-                    return "Congratulations! You are a verified user.";
-                }
-                //no error message need
-                //return false;
-            }
-            // no return statement. Just return the first catch.
-        } catch (UserIssueException $e) {
-            // in place catch block. Doesn't do anything but is a place holder. Hard code solution used instead.
-        }
-        // retrieve the username and password
-        $username = trim(filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING));
-        $password = trim(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING));
-
-        try {
-            if ($username == "" || $password == "") {
-                throw new DataMissingException("Please enter a username or password");
-            }
-        } catch (DataMissingException $e) {
-            $view = new UserController();
-            $view->error($e->getMessage());
-            return false;
-        }
-
-        // put the user input into an session variable
-        $_SESSION['attempted_username'] = $username;
-        $_SESSION['attempted_password'] = $password;
-
-        $verify = "There was an issue verifying your account. Please make sure your username and password are valid." . "<br><br>";
-        $view = new UserNonVerify();
-        $view->display($verify);
-        return false;
-    }
-
-
-    public function view_user($id)
+    public function view_user()
     {
         try {
             //the select sql statement
-            $sql = "SELECT * FROM " . $this->tblUsers . " WHERE id='$id'";
+            $sql = "SELECT * FROM " . $this->db->getMembersTable() . " WHERE member_id =" . $_SESSION['member-id'];
             //execute the query
             $query = $this->dbConnection->query($sql);
 
@@ -286,14 +145,14 @@ class UserModel
                 $obj = $query->fetch_object();
 
                 //create an user object
-                $user = new User (stripslashes($obj->id), stripslashes($obj->username), stripslashes($obj->password), stripslashes($obj->firstname), stripslashes($obj->lastname), stripslashes($obj->email), stripcslashes($obj->role));
+                $user = new User (stripslashes($obj->first_name), stripslashes($obj->last_name), stripslashes($obj->email_address), stripslashes($obj->password), stripslashes($obj->home_address), stripslashes($obj->city), stripslashes($obj->state), stripslashes($obj->zip), stripslashes($obj->country), stripslashes($obj->role));
                 //set the id for the user
                 $user->setId($obj->id);
                 return $user;
             } else {
-                throw new UserIssueException("There was an issue viewing the user");
+                throw new PageloadException("There was an issue viewing the user");
             }
-        } catch (UserIssueException $e) {
+        } catch (PageloadException $e) {
             $view = new UserController();
             $view->error($e->getMessage());
             return false;
