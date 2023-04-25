@@ -106,11 +106,11 @@ class UserController
             $_SESSION['member-id'] = 8;
             $_SESSION['privilege'] = true;
 
-            // Redirect to the user detail page or any other desired page
+            // Redirect to the user detail page
             header('Location: ' . BASE_URL . '/user/detail');
         } else {
             // Handle the failed login attempt
-            // You can set a message to inform the user of the failed attempt
+            // Error Message
             $message = "Invalid email or password. Please try again.";
             $this->error($message);
         }
