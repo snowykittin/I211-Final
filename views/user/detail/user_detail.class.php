@@ -3,7 +3,7 @@
 
 class UserDetail extends UserIndexView
 {
-    public function display($user_id, $user, $confirm = "")
+    public function display($id)
     {
         if (session_status() == PHP_SESSION_NONE) {
             session_start();

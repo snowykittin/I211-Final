@@ -100,68 +100,66 @@ class UserModel
         return $users;
     }
 
-    public function add_user()
-    {
+    public function add_user(){
         //retrieve user inputs from the registration form
-        $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_STRING);
-        $password = trim(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING));
-        $lastname = filter_input(INPUT_POST, "lastname", FILTER_SANITIZE_STRING);
         $firstname = filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_STRING);
+        $lastname = filter_input(INPUT_POST, "lastname", FILTER_SANITIZE_STRING);
         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
+        $password = trim(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING));
+        $home_address = filter_input(INPUT_POST, "home_address", FILTER_SANITIZE_STRING);
+        $city = filter_input(INPUT_POST, "city", FILTER_SANITIZE_STRING);
+        $state = filter_input(INPUT_POST, "state", FILTER_SANITIZE_STRING);
+        $zip = filter_input(INPUT_POST, "zip", FILTER_SANITIZE_NUMBER_INT);
+        $country = filter_input(INPUT_POST, "country", FILTER_SANITIZE_STRING);
 
         // handles missing data before even reaching the sql statement
         try {
-            if ($username == "" || $password == "" || $lastname == "" || $firstname == "" || $email == "") {
+            if ($home_address == "" || $password == "" || $lastname == "" || $firstname == "" || $email == "" || $country == "") {
                 throw new DataMissingException("There is missing data. Please make sure to fill out all fields.");
             }
             // verify email format
             if (!Utilities::checkemail($email)) {
                 throw new EmailFormatException("Email entered does not follow format. Please follow the email format.");
             }
-            // verify password exceptions
-            if (strlen($password) < 8) {
-                throw new PasswordLengthException("Password must be at least 8 characters long.");
-            }
-            if (!preg_match("@[A-Z]@", $password)) {
-                throw new PasswordLengthException("Password must have at least one Uppercase Letter");
-            }
-            if (!preg_match("@[0-9]@", $password)) {
-                throw new PasswordLengthException("Password must have at least one number.");
-            }
         } catch (DataMissingException $e) {
             $view = new UserController();
             $view->error($e->getMessage());
-            return false;
+            exit();
         } catch (EmailFormatException $e) {
             $view = new UserController();
             $view->error($e->getMessage());
-            return false;
-        } catch (PasswordLengthException $e) {
-            $view = new UserController();
-            $view->error($e->getMessage());
-            return false;
+            exit();
         }
-        //hash the password
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         try {
-            // set the users role to 2 (2 will be default user)
-            $role = 2;
+            $sql = "INSERT INTO " . $this->db->getMembersTable() . " VALUES(NULL, '$firstname', '$lastname', '$email', '$password', '$home_address', '$city', '$state', '$zip', '$country', 2)";
 
-            $sql = "INSERT INTO " . $this->db->getMembersTable() . " VALUES(NULL, '$username', '$hashed_password', '$firstname', '$lastname', '$email', '$role')";
-
+            $query = $this->dbConnection->query($sql);
             //execute the query and return true if successful or false if failed
-            if ($this->dbConnection->query($sql) === TRUE) {
-                return "Congratulations! You have added an account.";
-            } else {
-                throw new RegisterErrorException("There was an error registering the account.");
+            if (!$query) {
+                throw new PageloadException("There was an error registering the account.");
             }
-        } catch (RegisterErrorException $e) {
+
+            //set the user's id
+            $sql2 = "SELECT * FROM member WHERE email_address = '$email' AND password = '$password'";
+            $query2 =  $this->dbConnection->query($sql2);
+
+            if (!$query2) {
+                throw new PageloadException("There was an error signing into the account.");
+            }else{
+                //set member id
+                $row = $query2->fetch_assoc();
+                $_SESSION['member-id'] = $row['member_id'];
+                //set privilege
+                $_SESSION['privilege'] = false;
+            }
+
+            return true;
+        } catch (PageloadException $e) {
             $view = new UserController();
             $view->error($e->getMessage());
             return false;
         }
-        //  return true;
     }
 
     public function verify_user()

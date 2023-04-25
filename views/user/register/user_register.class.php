@@ -17,7 +17,7 @@ class UserRegister extends IndexView
 
         <!-- display the user information register in a form -->
         <div class="register-form">
-            <form action='<?= BASE_URL . "/user/add/" ?>' method="post">
+            <form action='<?= BASE_URL . "/user/create/" ?>' method="post">
 
 
                 <label for="firstname">First Name:</label>
@@ -30,7 +30,7 @@ class UserRegister extends IndexView
                 <input name="email" type="email" placeholder="exampleaddress@iu.edu"
                        onfocus="this.placeholder = ' '">
                 <label for="password">Password:</label>
-                <input name="password" type="text" placeholder="password"
+                <input name="password" type="password" placeholder="password"
                        onfocus="this.placeholder = ' '">
                 <label for="home_address">Address:</label>
                 <input name="home_address" type="text" placeholder="123 John St."
