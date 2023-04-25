@@ -178,12 +178,6 @@ class UserModel
 
             if($query && $query->num_rows > 0){
                 $obj = $query->fetch_object();
-
-                //create an user object
-                $user = new User (stripslashes($obj->first_name), stripslashes($obj->last_name), stripslashes($obj->email_address), stripslashes($obj->password), stripslashes($obj->home_address), stripslashes($obj->city), stripslashes($obj->state), stripslashes($obj->zip), stripslashes($obj->country), stripslashes($obj->privilege_id));
-                //set the id for the user
-                $user->setId($obj->member_id);
-
                 $_SESSION['member-id'] = $obj->member_id;
 
                 //check admin level
