@@ -41,7 +41,7 @@ class ComposerStaticInit1ead6ce07a3836fe5762e9902a70ffd1
         'User' => __DIR__ . '/../..' . '/models/user/user.class.php',
         'UserController' => __DIR__ . '/../..' . '/controllers/user_controller.class.php',
         'UserDetailView' => __DIR__ . '/../..' . '/views/user/detail/user_detail.class.php',
-        'UserEdit' => __DIR__ . '/../..' . '/views/user/edit/user_edit.class.php',
+        'UserEditView' => __DIR__ . '/../..' . '/views/user/edit/user_edit.class.php',
         'UserLogin' => __DIR__ . '/../..' . '/views/user/login/user_login.class.php',
         'UserModel' => __DIR__ . '/../..' . '/models/user/user_model.class.php',
         'UserRegister' => __DIR__ . '/../..' . '/views/user/register/user_register.class.php',

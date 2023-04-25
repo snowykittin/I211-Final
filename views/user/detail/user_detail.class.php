@@ -18,21 +18,35 @@ class UserDetailView extends IndexView
        <div class="title">
            <h1>Member Details</h1>
        </div>
-        <div>
-            <p>
-                <?= $name ?>
-            </p>
-            <p>
-                <?= $email ?>
-            </p>
-            <p>
-                <?= $street_address ?>
-            </p>
-            <p>
-                <?= $location ?>
-            </p>
+        <div class="member-details">
+            <div class="personal-details">
+                <h4>Personal Details</h4>
+                <p>
+                    <strong>Name:</strong> <?= $name ?>
+                </p>
+                <p>
+                    <strong>Email:</strong> <?= $email ?>
+                </p>
+            </div>
+            <div class="mailing-details">
+                <h4>Mailing Details</h4>
+                <p>
+                    <strong>Address:</strong> <?= $street_address ?>
+                </p>
+                <p>
+                    <?= $location ?>
+                </p>
+            </div>
         </div>
 
+        <div class="actions">
+            <a href="<?= BASE_URL ?>/user/edit"><button>Edit Details</button></a>
+        </div>
+
+
+        <div class="bottom-banner">
+
+        </div>
         <?php
         //display page footer
         parent::displayFooter();

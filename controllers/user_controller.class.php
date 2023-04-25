@@ -41,19 +41,43 @@ class UserController
     }
 
     // edit a users information
-    public function edit($id)
+    public function edit()
     {
-        // retrieve user info
-        $user = $this->user_model->view_user($id);
+        //don't let them see this if they ain't signed in
+        try{
+            if(!isset($_SESSION['member-id'])){
+                throw new UnauthorizedAccessException("You must sign in to view this page.");
+            }
 
-        // error handle
-        if (!$user) {
-            return false;
+            $user = $this->user_model->view_user();
+            if(!$user){
+                throw new PageloadException("Couldn't load user data.");
+            }
+
+            //display user details
+            $view = new UserEditView();
+            $view->display($user);
+        }catch (UnauthorizedAccessException $e){
+            $this->error($e->getMessage());
+        }catch (PageloadException $e){
+            $this->error($e->getMessage());
+        }
+    }
+
+    public function confirm_edit(){
+        try{
+            $edits = $this->user_model->edit_user();
+
+            if(!$edits){
+                throw new PageloadException("Failure to edit details.");
+            }
+
+            //reroute to detail
+            $this->detail();
+        }catch (PageloadException $e){
+            $this->error($e->getMessage());
         }
 
-        $view = new UserEdit();
-        $view->display($user);
-        return true;
     }
 
     //register

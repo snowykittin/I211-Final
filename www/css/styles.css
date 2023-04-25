@@ -434,3 +434,22 @@ footer{
     border: 2px solid grey;
     margin-bottom: 12px;
 }
+
+/* USER DETAILS */
+.member-details{
+    width: 500px;
+    margin: auto;
+}
+.member-details h4{
+    color: #164d35;
+}
+.bottom-banner{
+    background-image: linear-gradient(rgba(50, 168, 82, .6), rgba(50, 168, 82, .2)), url("../images/AdobeStock_575864152.jpeg");
+    height: 350px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

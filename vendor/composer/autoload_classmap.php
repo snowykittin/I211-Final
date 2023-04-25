@@ -40,7 +40,7 @@ return array(
     'User' => $baseDir . '/models/user/user.class.php',
     'UserController' => $baseDir . '/controllers/user_controller.class.php',
     'UserDetailView' => $baseDir . '/views/user/detail/user_detail.class.php',
-    'UserEdit' => $baseDir . '/views/user/edit/user_edit.class.php',
+    'UserEditView' => $baseDir . '/views/user/edit/user_edit.class.php',
     'UserLogin' => $baseDir . '/views/user/login/user_login.class.php',
     'UserModel' => $baseDir . '/models/user/user_model.class.php',
     'UserRegister' => $baseDir . '/views/user/register/user_register.class.php',

@@ -122,6 +122,54 @@ class UserModel
         }
     }
 
+    public function edit_user(){
+        //retrieve user inputs from the registration form
+        $firstname = filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_STRING);
+        $lastname = filter_input(INPUT_POST, "lastname", FILTER_SANITIZE_STRING);
+        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
+        $password = trim(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING));
+        $home_address = filter_input(INPUT_POST, "home_address", FILTER_SANITIZE_STRING);
+        $city = filter_input(INPUT_POST, "city", FILTER_SANITIZE_STRING);
+        $state = filter_input(INPUT_POST, "state", FILTER_SANITIZE_STRING);
+        $zip = filter_input(INPUT_POST, "zip", FILTER_SANITIZE_NUMBER_INT);
+        $country = filter_input(INPUT_POST, "country", FILTER_SANITIZE_STRING);
+
+        // handles missing data before even reaching the sql statement
+        try {
+            if ($home_address == "" || $password == "" || $lastname == "" || $firstname == "" || $email == "" || $country == "") {
+                throw new DataMissingException("There is missing data. Please make sure to fill out all fields.");
+            }
+            // verify email format
+            if (!Utilities::checkemail($email)) {
+                throw new EmailFormatException("Email entered does not follow format. Please follow the email format.");
+            }
+        } catch (DataMissingException $e) {
+            $view = new UserController();
+            $view->error($e->getMessage());
+            exit();
+        } catch (EmailFormatException $e) {
+            $view = new UserController();
+            $view->error($e->getMessage());
+            exit();
+        }
+
+        try {
+            $sql = "UPDATE " . $this->db->getMembersTable() . " SET first_name = '$firstname', last_name = '$lastname', email_address = '$email', password = '$password', home_address = '$home_address', city = '$city', state = '$state', zip = '$zip', country = '$country' WHERE member_id = ". $_SESSION['member-id'];
+
+            $query = $this->dbConnection->query($sql);
+            //execute the query and return true if successful or false if failed
+            if (!$query) {
+                throw new PageloadException("There was an error editing your account details.");
+            }
+
+            return true;
+        } catch (PageloadException $e) {
+            $view = new UserController();
+            $view->error($e->getMessage());
+            return false;
+        }
+    }
+
     public function view_user()
     {
         try {
