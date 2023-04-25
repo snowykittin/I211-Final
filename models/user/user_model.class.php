@@ -209,5 +209,24 @@ class UserModel
         }
         return true;
     }
+    public function verify_user($email, $password)
+    {
+        $email = $this->dbConnection->real_escape_string(trim($email));
+        $sql = "SELECT * FROM " . $this->db->getMembersTable() . " WHERE email_address='$email'";
+
+        $query = $this->dbConnection->query($sql);
+
+        if ($query && $query->num_rows > 0) {
+            $user = $query->fetch_object();
+            // Verify the password
+            if (password_verify($password, $user->password)) {
+                return $user;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 
 }

@@ -95,6 +95,26 @@ class UserController
         $view = new RegisterSuccessView();
         $view->display();
     }
+    public function verify()
+    {
+        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+        $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+
+        $user = $this->user_model->verify_user($email, $password);
+
+        if ($user) {
+            $_SESSION['member-id'] = 8;
+            $_SESSION['privilege'] = true;
+
+            // Redirect to the user detail page or any other desired page
+            header('Location: ' . BASE_URL . '/user/detail');
+        } else {
+            // Handle the failed login attempt
+            // You can set a message to inform the user of the failed attempt
+            $message = "Invalid email or password. Please try again.";
+            $this->error($message);
+        }
+    }
 
     //login
     public function login()
