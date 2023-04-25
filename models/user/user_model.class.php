@@ -56,6 +56,10 @@ class UserModel
             $view = new ErrorView();
             $view->display($e->getMessage());
             return false;
+        }catch (Exception $e){
+            $view = new ErrorView();
+            $view->display($e->getMessage());
+            exit();
         }
     }
 
@@ -89,6 +93,10 @@ class UserModel
             $view = new UserController();
             $view->error($e->getMessage());
             exit();
+        }catch (Exception $e){
+            $view = new ErrorView();
+            $view->display($e->getMessage());
+            exit();
         }
 
         try {
@@ -119,6 +127,10 @@ class UserModel
             $view = new UserController();
             $view->error($e->getMessage());
             return false;
+        }catch (Exception $e){
+            $view = new ErrorView();
+            $view->display($e->getMessage());
+            exit();
         }
     }
 
@@ -151,6 +163,10 @@ class UserModel
             $view = new UserController();
             $view->error($e->getMessage());
             exit();
+        }catch (Exception $e){
+            $view = new ErrorView();
+            $view->display($e->getMessage());
+            exit();
         }
 
         try {
@@ -167,6 +183,10 @@ class UserModel
             $view = new UserController();
             $view->error($e->getMessage());
             return false;
+        }catch (Exception $e){
+            $view = new ErrorView();
+            $view->display($e->getMessage());
+            exit();
         }
     }
 
@@ -202,6 +222,10 @@ class UserModel
             $view = new UserController();
             $view->error($e->getMessage());
             return false;
+        }catch (Exception $e){
+            $view = new ErrorView();
+            $view->display($e->getMessage());
+            exit();
         }
         //return true;
     }
@@ -241,6 +265,10 @@ class UserModel
             $view->display($e->getMessage());
             return false;
         } catch (DataMissingException $e) {
+            $view = new ErrorView();
+            $view->display($e->getMessage());
+            exit();
+        }catch (Exception $e){
             $view = new ErrorView();
             $view->display($e->getMessage());
             exit();

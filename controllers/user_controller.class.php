@@ -37,6 +37,10 @@ class UserController
             $this->error($e->getMessage());
         }catch (PageloadException $e){
             $this->error($e->getMessage());
+        }catch (Exception $e){
+            $message = $e->getMessage();
+            //display error page
+            $this->error($message);
         }
     }
 
@@ -61,6 +65,10 @@ class UserController
             $this->error($e->getMessage());
         }catch (PageloadException $e){
             $this->error($e->getMessage());
+        }catch (Exception $e){
+            $message = $e->getMessage();
+            //display error page
+            $this->error($message);
         }
     }
 
@@ -76,6 +84,10 @@ class UserController
             $this->detail();
         }catch (PageloadException $e){
             $this->error($e->getMessage());
+        }catch (Exception $e){
+            $message = $e->getMessage();
+            //display error page
+            $this->error($message);
         }
 
     }
@@ -113,6 +125,10 @@ class UserController
         }catch (PageloadException $e){
             $this->error($e->getMessage());
             exit;
+        }catch (Exception $e){
+            $message = $e->getMessage();
+            //display error page
+            $this->error($message);
         }
 
         //go to accounts page
@@ -133,6 +149,10 @@ class UserController
             $this->detail();
         }catch (PageloadException $e){
             $this->error($e->getMessage());
+        }catch (Exception $e){
+            $message = $e->getMessage();
+            //display error page
+            $this->error($message);
         }
 
     }

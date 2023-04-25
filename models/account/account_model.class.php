@@ -68,6 +68,10 @@ class AccountModel
             $view = new ErrorView();
             $view->display($e->getMessage());
             return false;
+        }catch (Exception $e){
+            $view = new ErrorView();
+            $view->display($e->getMessage());
+            exit();
         }
 
     }
@@ -106,6 +110,10 @@ class AccountModel
             $view = new ErrorView();
             $view->display($e->getMessage());
             return false;
+        }catch (Exception $e){
+            $view = new ErrorView();
+            $view->display($e->getMessage());
+            exit();
         }
 
     }
@@ -160,6 +168,10 @@ class AccountModel
             $view = new ErrorView();
             $view->display($e->getMessage());
             return false;
+        }catch (Exception $e){
+            $view = new ErrorView();
+            $view->display($e->getMessage());
+            exit();
         }
 
 
@@ -198,6 +210,10 @@ class AccountModel
             $view = new ErrorView();
             $view->display($e->getMessage());
             return false;
+        }catch (Exception $e){
+            $view = new ErrorView();
+            $view->display($e->getMessage());
+            exit();
         }
     }
 
@@ -239,6 +255,10 @@ class AccountModel
             $view = new ErrorView();
             $view->display($e->getMessage());
             return false;
+        }catch (Exception $e){
+            $view = new ErrorView();
+            $view->display($e->getMessage());
+            exit();
         }
 
 
@@ -270,6 +290,10 @@ class AccountModel
             $view = new ErrorView();
             $view->display($e->getMessage());
             return false;
+        }catch (Exception $e){
+            $view = new ErrorView();
+            $view->display($e->getMessage());
+            exit();
         }
 
     }
@@ -300,6 +324,10 @@ class AccountModel
             $view = new ErrorView();
             $view->display($e->getMessage());
             return false;
+        }catch (Exception $e){
+            $view = new ErrorView();
+            $view->display($e->getMessage());
+            exit();
         }
 
     }
@@ -332,6 +360,10 @@ class AccountModel
             $view = new ErrorView();
             $view->display($e->getMessage());
             return false;
+        }catch (Exception $e){
+            $view = new ErrorView();
+            $view->display($e->getMessage());
+            exit();
         }
 
 
@@ -383,6 +415,10 @@ class AccountModel
             $view->display($e->getMessage());
             exit();
         } catch (InsufficientFundsException $e) {
+            $view = new ErrorView();
+            $view->display($e->getMessage());
+            exit();
+        }catch (Exception $e){
             $view = new ErrorView();
             $view->display($e->getMessage());
             exit();

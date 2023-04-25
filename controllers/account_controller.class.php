@@ -32,6 +32,10 @@ class AccountController
             $view->display($accounts, $make_account);
         }catch (PageloadException $e) {
             $this->error($e->getMessage());
+        }catch (Exception $e){
+            $message = $e->getMessage();
+            //display error page
+            $this->error($message);
         }
 
     }
@@ -58,6 +62,10 @@ class AccountController
             $view->display($account, $transactions);
         }catch (PageloadException $e) {
             $this->error($e->getMessage());
+        }catch (Exception $e){
+            $message = $e->getMessage();
+            //display error page
+            $this->error($message);
         }
 
     }
@@ -71,16 +79,25 @@ class AccountController
         if($query_terms == "")
             $this->index();
 
-        //search database for matching accounts
-        $accounts = $this->account_model->search_accounts($query_terms);
+        try{
+            //search database for matching accounts
+            $accounts = $this->account_model->search_accounts($query_terms);
 
-        if($accounts === false){
-            // handle error
-            $this->index();
+            if($accounts === false){
+                // handle error
+                throw new PageloadException("We're sorry, we cannot load your accounts at this time.");
+            }
+            //display matched accounts
+            $search = new AccountSearch();
+            $search->display($accounts);
+        }catch (PageloadException $e) {
+            $this->error($e->getMessage());
+        }catch (Exception $e){
+            $message = $e->getMessage();
+            //display error page
+            $this->error($message);
         }
-        //display matched accounts
-        $search = new AccountSearch();
-        $search->display($accounts);
+
     }
 
     //transaction search
@@ -112,7 +129,10 @@ class AccountController
             $search->display($account, $transactions);
         }catch (PageloadException $e){
             $this->error($e->getMessage());
-
+        }catch (Exception $e){
+            $message = $e->getMessage();
+            //display error page
+            $this->error($message);
         }
 
 
@@ -120,29 +140,47 @@ class AccountController
 
     //make a transaction page
     public function make_transaction($id){
-        //retrieve specific account
-        $account = $this->account_model->view_account($id);
+        try{
+            //retrieve specific account
+            $account = $this->account_model->view_account($id);
 
-        if(!$account){
-            //display error
-            return "We're sorry, your account cannot be found to make a transaction.";
+            if(!$account){
+                //display error
+                throw new PageloadException("We're sorry, your account cannot be found to make a transaction.");
+            }
+
+            $view = new AccountTransaction();
+            $view->display($account);
+        }catch (PageloadException $e){
+            $this->error($e->getMessage());
+        }catch (Exception $e){
+            $message = $e->getMessage();
+            //display error page
+            $this->error($message);
         }
 
-        $view = new AccountTransaction();
-        $view->display($account);
     }
 
     //make a transaction
     public function transaction($id){
-        //make the transaction
-        $transaction = $this->account_model->make_transaction();
+        try {
+            //make the transaction
+            $transaction = $this->account_model->make_transaction();
 
-        if(!$transaction){
-            $this->error($transaction);
-        }else{
-            //go back to account details page
-            $this->details($id);
+            if (!$transaction) {
+                throw new PageloadException("We're sorry, we cannot make a transaction at this time.");
+            } else {
+                //go back to account details page
+                $this->details($id);
+            }
+        }catch (PageloadException $e){
+            $this->error($e->getMessage());
+        }catch (Exception $e){
+            $message = $e->getMessage();
+            //display error page
+            $this->error($message);
         }
+
     }
 
     //create a new bank account page - visible to admin's only
@@ -160,6 +198,10 @@ class AccountController
             $view->display($types, $currencies);
         }catch (UnauthorizedAccessException $e){
             $this->error($e->getMessage());
+        }catch (Exception $e){
+            $message = $e->getMessage();
+            //display error page
+            $this->error($message);
         }
 
     }
@@ -179,6 +221,10 @@ class AccountController
             $view->display($accounts, $make_account);
         }catch (PageloadException $e){
             $this->error($e->getMessage());
+        }catch (Exception $e){
+            $message = $e->getMessage();
+            //display error page
+            $this->error($message);
         }
 
     }
