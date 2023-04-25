@@ -14,7 +14,7 @@ class UserLogin extends IndexView
         <div class="register-form">
             <form action="<?= BASE_URL ?>/user/verify/" method="post">
                 <label for="username">Email:</label>
-                <input type="text" class="form-control" id="username" name="username" required>
+                <input type="text" class="form-control" id="email" name="email" required>
                 <label for="password">Password:</label>
                 <input type="password" class="form-control" id="password" name="password" required>
 

@@ -97,23 +97,20 @@ class UserController
     }
     public function verify()
     {
-        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-        $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+        try{
+            $user = $this->user_model->verify_user();
 
-        $user = $this->user_model->verify_user($email, $password);
+            //if no user, throw error
+            if(!$user){
+                throw new PageloadException("Invalid login details. Please try again.");
+            }
 
-        if ($user) {
-            $_SESSION['member-id'] = 8;
-            $_SESSION['privilege'] = true;
-
-            // Redirect to the user to the detail page
-            header('Location: ' . BASE_URL . '/user/detail');
-        } else {
-            // Handle the failed login attempt
-            // Error Message
-            $message = "Invalid email or password. Please try again.";
-            $this->error($message);
+            //reroute to details page
+            $this->detail();
+        }catch (PageloadException $e){
+            $this->error($e->getMessage());
         }
+
     }
 
     //login

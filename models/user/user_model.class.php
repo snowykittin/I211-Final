@@ -122,8 +122,6 @@ class UserModel
         }
     }
 
-
-
     public function view_user()
     {
         try {
@@ -145,9 +143,9 @@ class UserModel
                 $obj = $query->fetch_object();
 
                 //create an user object
-                $user = new User (stripslashes($obj->first_name), stripslashes($obj->last_name), stripslashes($obj->email_address), stripslashes($obj->password), stripslashes($obj->home_address), stripslashes($obj->city), stripslashes($obj->state), stripslashes($obj->zip), stripslashes($obj->country), stripslashes($obj->role));
+                $user = new User (stripslashes($obj->first_name), stripslashes($obj->last_name), stripslashes($obj->email_address), stripslashes($obj->password), stripslashes($obj->home_address), stripslashes($obj->city), stripslashes($obj->state), stripslashes($obj->zip), stripslashes($obj->country), stripslashes($obj->privilege_id));
                 //set the id for the user
-                $user->setId($obj->id);
+                $user->setId($obj->member_id);
                 return $user;
             } else {
                 throw new PageloadException("There was an issue viewing the user");
@@ -160,74 +158,52 @@ class UserModel
         //return true;
     }
 
-    //the update_user method updates an existing user in the database. Details of the user are posted in a form. Return true if succeed; false otherwise.
-    public function update_user($id)
-    {
-        try {
-            if (!filter_has_var(INPUT_POST, 'username') ||
-                !filter_has_var(INPUT_POST, 'password') ||
-                !filter_has_var(INPUT_POST, 'firstname') ||
-                !filter_has_var(INPUT_POST, 'lastname') ||
-                !filter_has_var(INPUT_POST, 'email')) {
-                throw new DataMissingException("Please fill out all information when updating. NO NULL VALUES.");
-            }
-        } catch (DataMissingException $e) {
-            $view = new UserController();
-            $view->error($e->getMessage());
-            return false;
-        }
-        $username = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING)));
-        $password = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING)));
-        $firstname = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_STRING)));
-        $lastname = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_STRING)));
-        $email = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL)));
-
-
-        $role = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'role', FILTER_SANITIZE_NUMBER_INT)));
-
-        if (!$role) {
-            $role = 2;
-        }
-
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-        try {
-            //update query
-            $sql = "UPDATE " . $this->tblUsers .
-                " SET username='$username', password='$hashed_password', firstname='$firstname', "
-                . "lastname='$lastname' , email='$email' , role='$role'  WHERE id='$id'";
-            //execute
-            $query = $this->dbConnection->query($sql);
-            if (!$query) {
-                throw new DatabaseException("Failed to update user.");
-            } else {
-                return $query;
-            }
-        } catch (DatabaseException $e) {
-            $view = new UserController();
-            $view->error($e->getMessage());
-        }
-        return true;
-    }
     //verify user
-    public function verify_user($email, $password)
+    public function verify_user()
     {
-        $email = $this->dbConnection->real_escape_string(trim($email));
-        $sql = "SELECT * FROM " . $this->db->getMembersTable() . " WHERE email_address='$email'";
+        try{
+            //check for post data
+            if(!filter_has_var(INPUT_POST, 'email') || !filter_has_var(INPUT_POST, 'password'))
+                throw new DataMissingException("Missing required fields, please try again.");
 
-        $query = $this->dbConnection->query($sql);
+            $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
+            $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 
-        if ($query && $query->num_rows > 0) {
-            $user = $query->fetch_object();
-            // Verify the password
-            if (password_verify($password, $user->password)) {
-                return $user;
-            } else {
-                return false;
+            $sql = "SELECT * FROM " . $this->db->getMembersTable() . " WHERE email_address = '$email' AND password = '$password'";
+
+            $query = $this->dbConnection->query($sql);
+
+            if(!$query)
+                throw new DatabaseException("There was an error connecting to the database. Please try again.");
+
+            if($query && $query->num_rows > 0){
+                $obj = $query->fetch_object();
+
+                //create an user object
+                $user = new User (stripslashes($obj->first_name), stripslashes($obj->last_name), stripslashes($obj->email_address), stripslashes($obj->password), stripslashes($obj->home_address), stripslashes($obj->city), stripslashes($obj->state), stripslashes($obj->zip), stripslashes($obj->country), stripslashes($obj->privilege_id));
+                //set the id for the user
+                $user->setId($obj->member_id);
+
+                $_SESSION['member-id'] = $obj->member_id;
+
+                //check admin level
+                if($obj->privilege_id == 2){
+                    $_SESSION['privilege'] = false;
+                }else{
+                    $_SESSION['privilege'] = true;
+                }
+                return true;
             }
-        } else {
+        }catch (DatabaseException $e) {
+            $view = new ErrorView();
+            $view->display($e->getMessage());
             return false;
+        } catch (DataMissingException $e) {
+            $view = new ErrorView();
+            $view->display($e->getMessage());
+            exit();
         }
+
     }
 
 }
